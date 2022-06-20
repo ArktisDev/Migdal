@@ -22,5 +22,5 @@ int main(int argc, char** argv)
     TTree* leavingTree;
     leavingTree = (TTree*) tfile.Get("leaving");
     
-    
+    enteringTree->Print();
 }
