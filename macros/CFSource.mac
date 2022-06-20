@@ -1,0 +1,7 @@
+#Cf-source
+/gps/particle ion
+/gps/ion 98 252 1 0.
+/gps/pos/type Point
+/gps/pos/centre 0 0 40 cm
+/gps/ang/type iso
+/gps/energy 1. eV

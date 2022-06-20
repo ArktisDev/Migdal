@@ -1,0 +1,7 @@
+/home/daq/Documents/Migdal/build/CMakeFiles/install/strip.dir
+/home/daq/Documents/Migdal/build/CMakeFiles/edit_cache.dir
+/home/daq/Documents/Migdal/build/CMakeFiles/rebuild_cache.dir
+/home/daq/Documents/Migdal/build/CMakeFiles/list_install_components.dir
+/home/daq/Documents/Migdal/build/CMakeFiles/install/local.dir
+/home/daq/Documents/Migdal/build/CMakeFiles/Migdal.dir
+/home/daq/Documents/Migdal/build/CMakeFiles/install.dir

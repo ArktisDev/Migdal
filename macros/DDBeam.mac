@@ -1,0 +1,9 @@
+#D-D
+/gps/particle neutron
+/gps/pos/type Beam
+/gps/pos/shape Circle
+/gps/pos/centre 0 0 200 cm
+/gps/pos/radius 2 cm
+/gps/ang/type beam1d
+/gps/ang/sigma_r 5. deg
+/gps/energy 2.5 MeV

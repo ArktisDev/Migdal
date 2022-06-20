@@ -1,0 +1,3 @@
+/control/execute macros/Setup.mac
+
+/run/beamOn 10000
