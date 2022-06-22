@@ -9,6 +9,9 @@
 /exp/addSourceShieldLayer 0.03 Cd 0
 /exp/addSourceShieldLayer 25 Poly 2.4
 
+/file/setFileName ../data/output.root
+/file/setMaterialLogFilename ../data/materials.log
+
 /run/initialize
 
 /run/setCut 1   mm

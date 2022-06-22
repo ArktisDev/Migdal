@@ -1,0 +1,328 @@
+
+***** Table : Nb of materials = 20 *****
+
+ Material:   G4_AIR    density:  1.205 mg/cm3  RadL: 303.921 m    Nucl.Int.Length: 710.095 m  
+                       Imean:  85.700 eV   temperature: 293.15 K  pressure:   1.00 atm
+
+   --->  Element: C (C)   Z =  6.0   N =    12   A = 12.011 g/mole
+         --->  Isotope:   C12   Z =  6   N =  12   A =  12.00 g/mole   abundance: 98.930 %
+         --->  Isotope:   C13   Z =  6   N =  13   A =  13.00 g/mole   abundance:  1.070 %
+          ElmMassFraction:   0.01 %  ElmAbundance   0.02 % 
+
+   --->  Element: N (N)   Z =  7.0   N =    14   A = 14.007 g/mole
+         --->  Isotope:   N14   Z =  7   N =  14   A =  14.00 g/mole   abundance: 99.632 %
+         --->  Isotope:   N15   Z =  7   N =  15   A =  15.00 g/mole   abundance:  0.368 %
+          ElmMassFraction:  75.53 %  ElmAbundance  78.44 % 
+
+   --->  Element: O (O)   Z =  8.0   N =    16   A = 15.999 g/mole
+         --->  Isotope:   O16   Z =  8   N =  16   A =  15.99 g/mole   abundance: 99.757 %
+         --->  Isotope:   O17   Z =  8   N =  17   A =  17.00 g/mole   abundance:  0.038 %
+         --->  Isotope:   O18   Z =  8   N =  18   A =  18.00 g/mole   abundance:  0.205 %
+          ElmMassFraction:  23.18 %  ElmAbundance  21.07 % 
+
+   --->  Element: Ar (Ar)   Z = 18.0   N =    40   A = 39.948 g/mole
+         --->  Isotope:  Ar36   Z = 18   N =  36   A =  35.97 g/mole   abundance:  0.337 %
+         --->  Isotope:  Ar38   Z = 18   N =  38   A =  37.96 g/mole   abundance:  0.063 %
+         --->  Isotope:  Ar40   Z = 18   N =  40   A =  39.96 g/mole   abundance: 99.600 %
+          ElmMassFraction:   1.28 %  ElmAbundance   0.47 % 
+
+
+ Material:    G4_Cu    density:  8.960 g/cm3   RadL:   1.436 cm   Nucl.Int.Length:  15.588 cm 
+                       Imean: 322.000 eV   temperature: 293.15 K  pressure:   1.00 atm
+
+   --->  Element: Cu (Cu)   Z = 29.0   N =    64   A = 63.546 g/mole
+         --->  Isotope:  Cu63   Z = 29   N =  63   A =  62.93 g/mole   abundance: 69.170 %
+         --->  Isotope:  Cu65   Z = 29   N =  65   A =  64.93 g/mole   abundance: 30.830 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material:    G4_Al    density:  2.699 g/cm3   RadL:   8.896 cm   Nucl.Int.Length:  38.894 cm 
+                       Imean: 166.000 eV   temperature: 293.15 K  pressure:   1.00 atm
+
+   --->  Element: Al (Al)   Z = 13.0   N =    27   A = 26.982 g/mole
+         --->  Isotope:  Al27   Z = 13   N =  27   A =  26.98 g/mole   abundance: 100.000 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material: G4_MYLAR    density:  1.400 g/cm3   RadL:  28.536 cm   Nucl.Int.Length:  55.923 cm 
+                       Imean:  78.700 eV   temperature: 293.15 K  pressure:   1.00 atm
+
+   --->  Element: C (C)   Z =  6.0   N =    12   A = 12.011 g/mole
+         --->  Isotope:   C12   Z =  6   N =  12   A =  12.00 g/mole   abundance: 98.930 %
+         --->  Isotope:   C13   Z =  6   N =  13   A =  13.00 g/mole   abundance:  1.070 %
+          ElmMassFraction:  62.50 %  ElmAbundance  45.45 % 
+
+   --->  Element: H (H)   Z =  1.0   N =     1   A =  1.008 g/mole
+         --->  Isotope:    H1   Z =  1   N =   1   A =   1.01 g/mole   abundance: 99.989 %
+         --->  Isotope:    H2   Z =  1   N =   2   A =   2.01 g/mole   abundance:  0.011 %
+          ElmMassFraction:   4.20 %  ElmAbundance  36.36 % 
+
+   --->  Element: O (O)   Z =  8.0   N =    16   A = 15.999 g/mole
+         --->  Isotope:   O16   Z =  8   N =  16   A =  15.99 g/mole   abundance: 99.757 %
+         --->  Isotope:   O17   Z =  8   N =  17   A =  17.00 g/mole   abundance:  0.038 %
+         --->  Isotope:   O18   Z =  8   N =  18   A =  18.00 g/mole   abundance:  0.205 %
+          ElmMassFraction:  33.30 %  ElmAbundance  18.18 % 
+
+
+ Material:    G4_Pb    density: 11.350 g/cm3   RadL:   5.613 mm   Nucl.Int.Length:  18.248 cm 
+                       Imean: 823.000 eV   temperature: 293.15 K  pressure:   1.00 atm
+
+   --->  Element: Pb (Pb)   Z = 82.0   N =   207   A = 207.217 g/mole
+         --->  Isotope: Pb204   Z = 82   N = 204   A = 203.97 g/mole   abundance:  1.400 %
+         --->  Isotope: Pb206   Z = 82   N = 206   A = 205.97 g/mole   abundance: 24.100 %
+         --->  Isotope: Pb207   Z = 82   N = 207   A = 206.98 g/mole   abundance: 22.100 %
+         --->  Isotope: Pb208   Z = 82   N = 208   A = 207.98 g/mole   abundance: 52.400 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material:    G4_Cd    density:  8.650 g/cm3   RadL:   1.040 cm   Nucl.Int.Length:  19.528 cm 
+                       Imean: 469.000 eV   temperature: 293.15 K  pressure:   1.00 atm
+
+   --->  Element: Cd (Cd)   Z = 48.0   N =   112   A = 112.411 g/mole
+         --->  Isotope: Cd106   Z = 48   N = 106   A = 105.91 g/mole   abundance:  1.250 %
+         --->  Isotope: Cd108   Z = 48   N = 108   A = 107.90 g/mole   abundance:  0.890 %
+         --->  Isotope: Cd110   Z = 48   N = 110   A = 109.90 g/mole   abundance: 12.490 %
+         --->  Isotope: Cd111   Z = 48   N = 111   A = 110.90 g/mole   abundance: 12.800 %
+         --->  Isotope: Cd112   Z = 48   N = 112   A = 111.90 g/mole   abundance: 24.130 %
+         --->  Isotope: Cd113   Z = 48   N = 113   A = 112.90 g/mole   abundance: 12.220 %
+         --->  Isotope: Cd114   Z = 48   N = 114   A = 113.90 g/mole   abundance: 28.730 %
+         --->  Isotope: Cd116   Z = 48   N = 116   A = 115.91 g/mole   abundance:  7.490 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material: G4_KAPTON    density:  1.420 g/cm3   RadL:  28.575 cm   Nucl.Int.Length:  55.817 cm 
+                       Imean:  79.600 eV   temperature: 293.15 K  pressure:   1.00 atm
+
+   --->  Element: C (C)   Z =  6.0   N =    12   A = 12.011 g/mole
+         --->  Isotope:   C12   Z =  6   N =  12   A =  12.00 g/mole   abundance: 98.930 %
+         --->  Isotope:   C13   Z =  6   N =  13   A =  13.00 g/mole   abundance:  1.070 %
+          ElmMassFraction:  69.11 %  ElmAbundance  56.41 % 
+
+   --->  Element: H (H)   Z =  1.0   N =     1   A =  1.008 g/mole
+         --->  Isotope:    H1   Z =  1   N =   1   A =   1.01 g/mole   abundance: 99.989 %
+         --->  Isotope:    H2   Z =  1   N =   2   A =   2.01 g/mole   abundance:  0.011 %
+          ElmMassFraction:   2.64 %  ElmAbundance  25.64 % 
+
+   --->  Element: N (N)   Z =  7.0   N =    14   A = 14.007 g/mole
+         --->  Isotope:   N14   Z =  7   N =  14   A =  14.00 g/mole   abundance: 99.632 %
+         --->  Isotope:   N15   Z =  7   N =  15   A =  15.00 g/mole   abundance:  0.368 %
+          ElmMassFraction:   7.33 %  ElmAbundance   5.13 % 
+
+   --->  Element: O (O)   Z =  8.0   N =    16   A = 15.999 g/mole
+         --->  Isotope:   O16   Z =  8   N =  16   A =  15.99 g/mole   abundance: 99.757 %
+         --->  Isotope:   O17   Z =  8   N =  17   A =  17.00 g/mole   abundance:  0.038 %
+         --->  Isotope:   O18   Z =  8   N =  18   A =  18.00 g/mole   abundance:  0.205 %
+          ElmMassFraction:  20.92 %  ElmAbundance  12.82 % 
+
+
+ Material: G4_POLYETHYLENE (C_2H_4)_N-Polyethylene   density: 940.000 mg/cm3  RadL:  47.632 cm   Nucl.Int.Length:  71.933 cm 
+                       Imean:  57.400 eV   temperature: 293.15 K  pressure:   1.00 atm
+
+   --->  Element: C (C)   Z =  6.0   N =    12   A = 12.011 g/mole
+         --->  Isotope:   C12   Z =  6   N =  12   A =  12.00 g/mole   abundance: 98.930 %
+         --->  Isotope:   C13   Z =  6   N =  13   A =  13.00 g/mole   abundance:  1.070 %
+          ElmMassFraction:  85.63 %  ElmAbundance  33.33 % 
+
+   --->  Element: H (H)   Z =  1.0   N =     1   A =  1.008 g/mole
+         --->  Isotope:    H1   Z =  1   N =   1   A =   1.01 g/mole   abundance: 99.989 %
+         --->  Isotope:    H2   Z =  1   N =   2   A =   2.01 g/mole   abundance:  0.011 %
+          ElmMassFraction:  14.37 %  ElmAbundance  66.67 % 
+
+
+ Material:      CF4    density: 96.319 mg/cm3  RadL:   3.751 m    Nucl.Int.Length:   9.113 m  
+                       Imean:  98.459 eV   temperature: 293.15 K  pressure:   1.00 atm
+
+   --->  Element: C (C)   Z =  6.0   N =    12   A = 12.011 g/mole
+         --->  Isotope:   C12   Z =  6   N =  12   A =  12.00 g/mole   abundance: 98.930 %
+         --->  Isotope:   C13   Z =  6   N =  13   A =  13.00 g/mole   abundance:  1.070 %
+          ElmMassFraction:  38.73 %  ElmAbundance  50.00 % 
+
+   --->  Element: F (F)   Z =  9.0   N =    19   A = 18.998 g/mole
+         --->  Isotope:   F19   Z =  9   N =  19   A =  19.00 g/mole   abundance: 100.000 %
+          ElmMassFraction:  61.27 %  ElmAbundance  50.00 % 
+
+
+ Material: Impure_Pb    density: 11.290 g/cm3   RadL:   5.643 mm   Nucl.Int.Length:  18.344 cm 
+                       Imean: 822.935 eV   temperature: 293.15 K  pressure:   1.00 atm
+
+   --->  Element: Pb (Pb)   Z = 82.0   N =   207   A = 207.217 g/mole
+         --->  Isotope: Pb204   Z = 82   N = 204   A = 203.97 g/mole   abundance:  1.400 %
+         --->  Isotope: Pb206   Z = 82   N = 206   A = 205.97 g/mole   abundance: 24.100 %
+         --->  Isotope: Pb207   Z = 82   N = 207   A = 206.98 g/mole   abundance: 22.100 %
+         --->  Isotope: Pb208   Z = 82   N = 208   A = 207.98 g/mole   abundance: 52.400 %
+          ElmMassFraction:  99.97 %  ElmAbundance  99.95 % 
+
+   --->  Element: Sb (Sb)   Z = 51.0   N =   122   A = 121.760 g/mole
+         --->  Isotope: Sb121   Z = 51   N = 121   A = 120.90 g/mole   abundance: 57.210 %
+         --->  Isotope: Sb123   Z = 51   N = 123   A = 122.90 g/mole   abundance: 42.790 %
+          ElmMassFraction:   0.00 %  ElmAbundance   0.00 % 
+
+   --->  Element: As (As)   Z = 33.0   N =    75   A = 74.922 g/mole
+         --->  Isotope:  As75   Z = 33   N =  75   A =  74.92 g/mole   abundance: 100.000 %
+          ElmMassFraction:   0.00 %  ElmAbundance   0.00 % 
+
+   --->  Element: Sn (Sn)   Z = 50.0   N =   119   A = 118.710 g/mole
+         --->  Isotope: Sn112   Z = 50   N = 112   A = 111.91 g/mole   abundance:  0.970 %
+         --->  Isotope: Sn114   Z = 50   N = 114   A = 113.90 g/mole   abundance:  0.660 %
+         --->  Isotope: Sn115   Z = 50   N = 115   A = 114.90 g/mole   abundance:  0.340 %
+         --->  Isotope: Sn116   Z = 50   N = 116   A = 115.90 g/mole   abundance: 14.540 %
+         --->  Isotope: Sn117   Z = 50   N = 117   A = 116.90 g/mole   abundance:  7.680 %
+         --->  Isotope: Sn118   Z = 50   N = 118   A = 117.90 g/mole   abundance: 24.220 %
+         --->  Isotope: Sn119   Z = 50   N = 119   A = 118.90 g/mole   abundance:  8.590 %
+         --->  Isotope: Sn120   Z = 50   N = 120   A = 119.90 g/mole   abundance: 32.580 %
+         --->  Isotope: Sn122   Z = 50   N = 122   A = 121.90 g/mole   abundance:  4.630 %
+         --->  Isotope: Sn124   Z = 50   N = 124   A = 123.91 g/mole   abundance:  5.790 %
+          ElmMassFraction:   0.00 %  ElmAbundance   0.00 % 
+
+   --->  Element: Cu (Cu)   Z = 29.0   N =    64   A = 63.546 g/mole
+         --->  Isotope:  Cu63   Z = 29   N =  63   A =  62.93 g/mole   abundance: 69.170 %
+         --->  Isotope:  Cu65   Z = 29   N =  65   A =  64.93 g/mole   abundance: 30.830 %
+          ElmMassFraction:   0.00 %  ElmAbundance   0.00 % 
+
+   --->  Element: Bi (Bi)   Z = 83.0   N =   209   A = 208.980 g/mole
+         --->  Isotope: Bi209   Z = 83   N = 209   A = 208.98 g/mole   abundance: 100.000 %
+          ElmMassFraction:   0.03 %  ElmAbundance   0.02 % 
+
+   --->  Element: Fe (Fe)   Z = 26.0   N =    56   A = 55.845 g/mole
+         --->  Isotope:  Fe54   Z = 26   N =  54   A =  53.94 g/mole   abundance:  5.845 %
+         --->  Isotope:  Fe56   Z = 26   N =  56   A =  55.93 g/mole   abundance: 91.754 %
+         --->  Isotope:  Fe57   Z = 26   N =  57   A =  56.94 g/mole   abundance:  2.119 %
+         --->  Isotope:  Fe58   Z = 26   N =  58   A =  57.93 g/mole   abundance:  0.282 %
+          ElmMassFraction:   0.00 %  ElmAbundance   0.00 % 
+
+   --->  Element: Ni (Ni)   Z = 28.0   N =    59   A = 58.693 g/mole
+         --->  Isotope:  Ni58   Z = 28   N =  58   A =  57.94 g/mole   abundance: 68.077 %
+         --->  Isotope:  Ni60   Z = 28   N =  60   A =  59.93 g/mole   abundance: 26.223 %
+         --->  Isotope:  Ni61   Z = 28   N =  61   A =  60.93 g/mole   abundance:  1.140 %
+         --->  Isotope:  Ni62   Z = 28   N =  62   A =  61.93 g/mole   abundance:  3.635 %
+         --->  Isotope:  Ni64   Z = 28   N =  64   A =  63.93 g/mole   abundance:  0.926 %
+          ElmMassFraction:   0.00 %  ElmAbundance   0.00 % 
+
+   --->  Element: Ag (Ag)   Z = 47.0   N =   108   A = 107.868 g/mole
+         --->  Isotope: Ag107   Z = 47   N = 107   A = 106.91 g/mole   abundance: 51.839 %
+         --->  Isotope: Ag109   Z = 47   N = 109   A = 108.91 g/mole   abundance: 48.161 %
+          ElmMassFraction:   0.00 %  ElmAbundance   0.01 % 
+
+   --->  Element: Zn (Zn)   Z = 30.0   N =    65   A = 65.396 g/mole
+         --->  Isotope:  Zn64   Z = 30   N =  64   A =  63.93 g/mole   abundance: 48.630 %
+         --->  Isotope:  Zn66   Z = 30   N =  66   A =  65.93 g/mole   abundance: 27.900 %
+         --->  Isotope:  Zn67   Z = 30   N =  67   A =  66.93 g/mole   abundance:  4.100 %
+         --->  Isotope:  Zn68   Z = 30   N =  68   A =  67.92 g/mole   abundance: 18.750 %
+         --->  Isotope:  Zn70   Z = 30   N =  70   A =  69.93 g/mole   abundance:  0.620 %
+          ElmMassFraction:   0.00 %  ElmAbundance   0.00 % 
+
+
+ Material:    G4_Sb    density:  6.691 g/cm3   RadL:   1.304 cm   Nucl.Int.Length:  25.927 cm 
+                       Imean: 487.000 eV   temperature: 293.15 K  pressure:   1.00 atm
+
+   --->  Element: Sb (Sb)   Z = 51.0   N =   122   A = 121.760 g/mole
+         --->  Isotope: Sb121   Z = 51   N = 121   A = 120.90 g/mole   abundance: 57.210 %
+         --->  Isotope: Sb123   Z = 51   N = 123   A = 122.90 g/mole   abundance: 42.790 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material:    G4_As    density:  5.730 g/cm3   RadL:   2.084 cm   Nucl.Int.Length:  25.750 cm 
+                       Imean: 347.000 eV   temperature: 293.15 K  pressure:   1.00 atm
+
+   --->  Element: As (As)   Z = 33.0   N =    75   A = 74.922 g/mole
+         --->  Isotope:  As75   Z = 33   N =  75   A =  74.92 g/mole   abundance: 100.000 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material:    G4_Sn    density:  7.310 g/cm3   RadL:   1.206 cm   Nucl.Int.Length:  23.531 cm 
+                       Imean: 488.000 eV   temperature: 293.15 K  pressure:   1.00 atm
+
+   --->  Element: Sn (Sn)   Z = 50.0   N =   119   A = 118.710 g/mole
+         --->  Isotope: Sn112   Z = 50   N = 112   A = 111.91 g/mole   abundance:  0.970 %
+         --->  Isotope: Sn114   Z = 50   N = 114   A = 113.90 g/mole   abundance:  0.660 %
+         --->  Isotope: Sn115   Z = 50   N = 115   A = 114.90 g/mole   abundance:  0.340 %
+         --->  Isotope: Sn116   Z = 50   N = 116   A = 115.90 g/mole   abundance: 14.540 %
+         --->  Isotope: Sn117   Z = 50   N = 117   A = 116.90 g/mole   abundance:  7.680 %
+         --->  Isotope: Sn118   Z = 50   N = 118   A = 117.90 g/mole   abundance: 24.220 %
+         --->  Isotope: Sn119   Z = 50   N = 119   A = 118.90 g/mole   abundance:  8.590 %
+         --->  Isotope: Sn120   Z = 50   N = 120   A = 119.90 g/mole   abundance: 32.580 %
+         --->  Isotope: Sn122   Z = 50   N = 122   A = 121.90 g/mole   abundance:  4.630 %
+         --->  Isotope: Sn124   Z = 50   N = 124   A = 123.91 g/mole   abundance:  5.790 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material:    G4_Bi    density:  9.747 g/cm3   RadL:   6.454 mm   Nucl.Int.Length:  21.309 cm 
+                       Imean: 823.000 eV   temperature: 293.15 K  pressure:   1.00 atm
+
+   --->  Element: Bi (Bi)   Z = 83.0   N =   209   A = 208.980 g/mole
+         --->  Isotope: Bi209   Z = 83   N = 209   A = 208.98 g/mole   abundance: 100.000 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material:    G4_Fe    density:  7.874 g/cm3   RadL:   1.757 cm   Nucl.Int.Length:  16.990 cm 
+                       Imean: 286.000 eV   temperature: 293.15 K  pressure:   1.00 atm
+
+   --->  Element: Fe (Fe)   Z = 26.0   N =    56   A = 55.845 g/mole
+         --->  Isotope:  Fe54   Z = 26   N =  54   A =  53.94 g/mole   abundance:  5.845 %
+         --->  Isotope:  Fe56   Z = 26   N =  56   A =  55.93 g/mole   abundance: 91.754 %
+         --->  Isotope:  Fe57   Z = 26   N =  57   A =  56.94 g/mole   abundance:  2.119 %
+         --->  Isotope:  Fe58   Z = 26   N =  58   A =  57.93 g/mole   abundance:  0.282 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material:    G4_Ni    density:  8.902 g/cm3   RadL:   1.424 cm   Nucl.Int.Length:  15.280 cm 
+                       Imean: 311.000 eV   temperature: 293.15 K  pressure:   1.00 atm
+
+   --->  Element: Ni (Ni)   Z = 28.0   N =    59   A = 58.693 g/mole
+         --->  Isotope:  Ni58   Z = 28   N =  58   A =  57.94 g/mole   abundance: 68.077 %
+         --->  Isotope:  Ni60   Z = 28   N =  60   A =  59.93 g/mole   abundance: 26.223 %
+         --->  Isotope:  Ni61   Z = 28   N =  61   A =  60.93 g/mole   abundance:  1.140 %
+         --->  Isotope:  Ni62   Z = 28   N =  62   A =  61.93 g/mole   abundance:  3.635 %
+         --->  Isotope:  Ni64   Z = 28   N =  64   A =  63.93 g/mole   abundance:  0.926 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material:    G4_Ag    density: 10.500 g/cm3   RadL:   8.543 mm   Nucl.Int.Length:  15.868 cm 
+                       Imean: 470.000 eV   temperature: 293.15 K  pressure:   1.00 atm
+
+   --->  Element: Ag (Ag)   Z = 47.0   N =   108   A = 107.868 g/mole
+         --->  Isotope: Ag107   Z = 47   N = 107   A = 106.91 g/mole   abundance: 51.839 %
+         --->  Isotope: Ag109   Z = 47   N = 109   A = 108.91 g/mole   abundance: 48.161 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material:    G4_Zn    density:  7.133 g/cm3   RadL:   1.743 cm   Nucl.Int.Length:  19.769 cm 
+                       Imean: 330.000 eV   temperature: 293.15 K  pressure:   1.00 atm
+
+   --->  Element: Zn (Zn)   Z = 30.0   N =    65   A = 65.396 g/mole
+         --->  Isotope:  Zn64   Z = 30   N =  64   A =  63.93 g/mole   abundance: 48.630 %
+         --->  Isotope:  Zn66   Z = 30   N =  66   A =  65.93 g/mole   abundance: 27.900 %
+         --->  Isotope:  Zn67   Z = 30   N =  67   A =  66.93 g/mole   abundance:  4.100 %
+         --->  Isotope:  Zn68   Z = 30   N =  68   A =  67.92 g/mole   abundance: 18.750 %
+         --->  Isotope:  Zn70   Z = 30   N =  70   A =  69.93 g/mole   abundance:  0.620 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+
+ Material: Borated Poly    density:  0.000 mg/cm3  RadL:  87.741 pc   Nucl.Int.Length: 132.346 pc 
+                       Imean:  55.676 eV   temperature: 293.15 K  pressure:   1.00 atm
+
+   --->  Element: C (C)   Z =  6.0   N =    12   A = 12.011 g/mole
+         --->  Isotope:   C12   Z =  6   N =  12   A =  12.00 g/mole   abundance: 98.930 %
+         --->  Isotope:   C13   Z =  6   N =  13   A =  13.00 g/mole   abundance:  1.070 %
+          ElmMassFraction:  81.35 %  ElmAbundance  32.59 % 
+
+   --->  Element: H (H)   Z =  1.0   N =     1   A =  1.008 g/mole
+         --->  Isotope:    H1   Z =  1   N =   1   A =   1.01 g/mole   abundance: 99.989 %
+         --->  Isotope:    H2   Z =  1   N =   2   A =   2.01 g/mole   abundance:  0.011 %
+          ElmMassFraction:  13.65 %  ElmAbundance  65.18 % 
+
+   --->  Element: B (B)   Z =  5.0   N =    11   A = 10.811 g/mole
+         --->  Isotope:   B10   Z =  5   N =  10   A =  10.01 g/mole   abundance: 19.900 %
+         --->  Isotope:   B11   Z =  5   N =  11   A =  11.01 g/mole   abundance: 80.100 %
+          ElmMassFraction:   5.00 %  ElmAbundance   2.23 % 
+
+
+ Material:     G4_B    density:  2.370 g/cm3   RadL:  22.231 cm   Nucl.Int.Length:  32.654 cm 
+                       Imean:  76.000 eV   temperature: 293.15 K  pressure:   1.00 atm
+
+   --->  Element: B (B)   Z =  5.0   N =    11   A = 10.811 g/mole
+         --->  Isotope:   B10   Z =  5   N =  10   A =  10.01 g/mole   abundance: 19.900 %
+         --->  Isotope:   B11   Z =  5   N =  11   A =  11.01 g/mole   abundance: 80.100 %
+          ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
+
+

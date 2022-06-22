@@ -20,8 +20,6 @@
 
 #include <iostream>
 
-const std::string DetectorConstruction::materialLogFilename = std::string("materials.log");
-
 const G4double inch = 2.54 * cm;
 
 DetectorConstruction::DetectorConstruction()
@@ -252,6 +250,10 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 void DetectorConstruction::SetPressure(G4double pressure)
 {
 	this->pressure = pressure;
+}
+
+void DetectorConstruction::SetMaterialLogFilename(G4String filename) {
+	this->materialLogFilename = filename;
 }
 
 std::vector<std::string> StringSplit(std::string input, char delim = ' ') {

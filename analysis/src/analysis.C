@@ -17,5 +17,5 @@ int main(int argc, char** argv)
     TFile tfile(inputFilename.c_str());
     SetupDataStructs(&tfile);
     
-    DrawTotalCountsHist();
+    // Create flux counts of each surface and totals
 }

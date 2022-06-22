@@ -8,7 +8,7 @@
 #include "DetectorConstruction.hh"
 
 RunAction::RunAction(DetectorConstruction* detector)
-: runMessenger( new RunMessenger(this) ), detector( detector ), filename( "output" )
+: runMessenger( new RunMessenger(this) ), detector( detector ), filename( "output.root" )
 {
     
 }
@@ -21,7 +21,7 @@ RunAction::~RunAction()
 void RunAction::BeginOfRunAction(const G4Run*)
 {
     G4RootAnalysisManager* man = G4RootAnalysisManager::Instance();
-    man->OpenFile(filename + ".root");
+    man->OpenFile(filename);
     man->Clear();
     
     man->CreateNtuple("Entering", "data");

@@ -12,8 +12,6 @@ class DetectorMessenger;
 class DetectorConstruction : public G4VUserDetectorConstruction
 {
   public:
-	const static std::string materialLogFilename;
-	
 	DetectorConstruction();
 	~DetectorConstruction() override;
 
@@ -27,6 +25,8 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 	void AddSourceShieldLayer(G4String shieldingConfiguration);
 	void SetSourceShieldInitialOffset(G4double initialOffset);
 	
+	void SetMaterialLogFilename(G4String filename);
+	
 	G4double GetPressure() {return this->pressure;}
 	
   private:
@@ -37,6 +37,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 	G4double 	  	    pressure;
 	G4double			sourceShieldInitialOffset;
 	
+	std::string materialLogFilename = std::string("../data/materials.log");
 	
 	std::vector<std::vector<std::string>> 	sourceShieldStructure;
 };

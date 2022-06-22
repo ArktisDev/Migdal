@@ -104,6 +104,9 @@
         "vec2": "cpp",
         "vec3": "cpp",
         "vec4": "cpp",
-        "analysis.C": "cpp"
+        "analysis.C": "cpp",
+        "shared_mutex": "cpp",
+        "buffer": "cpp",
+        "netfwd": "cpp"
     }
 }

@@ -29,6 +29,11 @@ DetectorMessenger::DetectorMessenger(DetectorConstruction* detector)
 	setSourceShieldInitialOffsetCmd->SetGuidance("Set initial offset in cm");
 	setSourceShieldInitialOffsetCmd->SetParameterName("Initial offset (cm)", false);
 	setSourceShieldInitialOffsetCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
+	
+	setMaterialLogFileNameCmd = new G4UIcmdWithAString("/file/setMaterialLogFilename", this);
+	setMaterialLogFileNameCmd->SetGuidance("Set material log file name");
+	setMaterialLogFileNameCmd->SetParameterName("Filename", false);
+	setMaterialLogFileNameCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
 }
 
 DetectorMessenger::~DetectorMessenger()
@@ -58,6 +63,9 @@ void DetectorMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue)
 	if (cmd == setSourceShieldInitialOffsetCmd) {
 		detector->SetSourceShieldInitialOffset(setSourceShieldInitialOffsetCmd->GetNewDoubleValue(newValue));
 		geometryChanged = true;
+	}
+	if (cmd == setMaterialLogFileNameCmd) {
+		detector->SetMaterialLogFilename(newValue);
 	}
 	
 	if (geometryChanged) {
