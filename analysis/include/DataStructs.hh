@@ -433,9 +433,6 @@ void SetupDataStructs(TFile* tfile) {
     TTree* metaTree;
     metaTree = (TTree*) tfile->Get("Meta");
     MetaData::SetupTree(metaTree);
-    
-    // Read in metadata
-    MetaData metadata; metadata.ReadEntry(0);
 }
 
 #endif // DATASTRUCTS_H
