@@ -9,14 +9,13 @@
 
 int main(int argc, char** argv)
 {
-    std::string inputFilename = "../../data/output.root";
+    std::string inputFilename = "../../geant/data/output.root";
     
     if (argc == 2) {
         inputFilename = std::string(argv[0]);
     }
     
     std::string outputFileName = inputFilename.substr(0, inputFilename.length() - 5).append("_counts.root");;
-    std::cout << outputFileName << std::endl;
     
     TFile inFile(inputFilename.c_str());
     SetupDataStructs(&inFile);
