@@ -27,6 +27,8 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 	void AddSourceShieldLayer(G4String shieldingConfiguration);
 	void SetSourceShieldInitialOffset(G4double initialOffset);
 	
+	G4double GetPressure() {return this->pressure;}
+	
   private:
 	DetectorMessenger*  detectorMessenger;
 	G4Region* 			detectorRegion;

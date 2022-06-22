@@ -23,21 +23,22 @@ file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.C)
 file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 
 #----------------------------------------------------------------------------
-# Add the executable, and link it to the ROOT libraries
-#
-add_executable(analysis test.C ${sources} ${headers})
-target_link_libraries(analysis ${ROOT_LIBRARIES})
+# Add the executables, and link it to the ROOT libraries
 
-#----------------------------------------------------------------------------
-# Set output directory
-#
-set_target_properties(analysis
-    PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY "."
-)
+foreach ( sourceFile ${sources} )
+    #file(RELATIVE_PATH filename ${CMAKE_CURRENT_SOURCE_DIR} ${sourceFile})   
+    #string( REPLACE ".C" "" source ${filename} )
+    message( ${sourceFile} )
+    get_filename_component(filename ${sourceFile} NAME)
+    string( REPLACE ".C" "" source ${filename} )
+    message( ${source} )
+    add_executable(${source} ${sourceFile} ${headers})
+    target_link_libraries(${source} ${ROOT_LIBRARIES})
+    set_target_properties(${source}
+        PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY "."
+    )
+endforeach ( sourceFile ${sources} )
 
-#----------------------------------------------------------------------------
-# Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
-#
-install(TARGETS analysis)
+install(TARGETS)
 

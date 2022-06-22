@@ -4,7 +4,7 @@
 
 # Run these commands before initializing the world to avoid messing up the material table with duplicate material names
 /exp/setPressure 20000
-/exp/setSourceShieldInitialOffset 100
+/exp/setSourceShieldInitialOffset 1
 /exp/addSourceShieldLayer 5 Pb 2.4
 /exp/addSourceShieldLayer 0.03 Cd 0
 /exp/addSourceShieldLayer 25 Poly 2.4

@@ -5,9 +5,10 @@
 #include "G4RootAnalysisManager.hh"
 
 #include "RunMessenger.hh"
+#include "DetectorConstruction.hh"
 
-RunAction::RunAction()
-: runMessenger( new RunMessenger(this) ), filename( "output" )
+RunAction::RunAction(DetectorConstruction* detector)
+: runMessenger( new RunMessenger(this) ), detector( detector ), filename( "output" )
 {
     
 }
@@ -72,6 +73,22 @@ void RunAction::BeginOfRunAction(const G4Run*)
     man->CreateNtupleDColumn("End Position y (mm)");
     man->CreateNtupleDColumn("End Position z (mm)");
     man->FinishNtuple(3);
+    
+    man->CreateNtuple("Meta", "data");
+    man->CreateNtupleDColumn("Detector_hx (mm)");
+    man->CreateNtupleDColumn("Detector_hy (mm)");
+    man->CreateNtupleDColumn("Detector_hz (mm)");
+    man->CreateNtupleDColumn("Pressure (torr)");
+    man->FinishNtuple(4);
+    
+    G4int id = 0;
+    G4int tupleID = 4;
+    
+    man->FillNtupleDColumn(tupleID, id++, 100);
+    man->FillNtupleDColumn(tupleID, id++, 100);
+    man->FillNtupleDColumn(tupleID, id++, 100);
+    man->FillNtupleDColumn(tupleID, id++, detector->GetPressure());
+    man->AddNtupleRow(tupleID);
 }
 
 void RunAction::EndOfRunAction(const G4Run*)

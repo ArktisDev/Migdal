@@ -42,7 +42,7 @@ int main(int argc, char** argv)
     runManager->SetUserAction(primary);
     
     // Initialize run action
-    RunAction* runAction = new RunAction();
+    RunAction* runAction = new RunAction(detector);
     runManager->SetUserAction(runAction);
     
     // Initialize stepping action
