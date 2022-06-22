@@ -12,7 +12,7 @@ int main(int argc, char** argv)
     std::string inputFilename = "../../geant/data/output.root";
     
     if (argc == 2) {
-        inputFilename = std::string(argv[0]);
+        inputFilename = std::string(argv[1]);
     }
     
     std::string outputFileName = inputFilename.substr(0, inputFilename.length() - 5).append("_counts.root");;
