@@ -25,22 +25,22 @@ int main(int argc, char** argv)
     
     timer.start();
     std::string outFileName3DTTTP = strippedInputFilename + std::string("_3D_TTrack_TParticle.root");
-    CC_3D_TTrack_TParticle(&inFile, outFileName3DTTTP);
+    CalculateCoincidences<true, true, true, true, true>(&inFile, outFileName3DTTTP);
     std::cout << "3D_TTrack_TParticle took " << timer.elapsedMilli() << "ms" << std::endl;
     
     timer.start();
     std::string outFileName2DTTTP = strippedInputFilename + std::string("_2D_xz_TTrack_TParticle.root");
-    CC_2D_TTrack_TParticle(&inFile, outFileName2DTTTP, true, false, true);
+    CalculateCoincidences<true, true, true, false, true>(&inFile, outFileName2DTTTP);
     std::cout << "2d_xz_TTrack_TParticle took " << timer.elapsedMilli() << "ms" << std::endl;
     
     timer.start();
     std::string outFileName3DTTFP = strippedInputFilename + std::string("_3D_TTrack_FParticle.root");
-    CC_3D_TTrack_FParticle(&inFile, outFileName3DTTFP);
+    CalculateCoincidences<false, true, true, true, true>(&inFile, outFileName3DTTFP);
     std::cout << "3D_TTrack_FParticle took " << timer.elapsedMilli() << "ms" << std::endl;
     
     timer.start();
     std::string outFileName2DTTFP = strippedInputFilename + std::string("_2D_xz_TTrack_FParticle.root");
-    CC_2D_TTrack_FParticle(&inFile, outFileName2DTTFP, true, false, true);
+    CalculateCoincidences<false, true, true, false, true>(&inFile, outFileName2DTTFP);
     std::cout << "2d_xz_TTrack_FParticle took " << timer.elapsedMilli() << "ms" << std::endl;
     
     inFile.Close();

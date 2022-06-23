@@ -14,5 +14,5 @@
 
 /run/initialize
 
-/run/setCut 1   mm
+/run/setCut 1 mm
 /run/setCutForRegion DetectorRegion 0.01 mm

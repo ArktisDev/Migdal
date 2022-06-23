@@ -120,6 +120,15 @@
         "obj_list": "cpp",
         "matrix_action": "cpp",
         "begend": "cpp",
-        "member_writer": "cpp"
+        "member_writer": "cpp",
+        "search_action": "cpp",
+        "file": "cpp",
+        "file_format": "cpp",
+        "file_reader": "cpp",
+        "fileis": "cpp",
+        "fsize": "cpp",
+        "gzip": "cpp",
+        "directory": "cpp",
+        "signature": "cpp"
     }
 }
