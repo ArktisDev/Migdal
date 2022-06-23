@@ -109,6 +109,17 @@
         "buffer": "cpp",
         "netfwd": "cpp",
         "detectorCounts.C": "cpp",
-        "DetectorSurfaceCounts.C": "cpp"
+        "DetectorSurfaceCounts.C": "cpp",
+        "Coincidences3D.C": "cpp",
+        "vmanip": "cpp",
+        "vector3": "cpp",
+        "event": "cpp",
+        "point": "cpp",
+        "Coincidences.C": "cpp",
+        "iros": "cpp",
+        "obj_list": "cpp",
+        "matrix_action": "cpp",
+        "begend": "cpp",
+        "member_writer": "cpp"
     }
 }
