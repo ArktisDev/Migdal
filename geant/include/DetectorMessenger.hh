@@ -23,9 +23,16 @@ class DetectorMessenger : public G4UImessenger
 	
 	G4UIdirectory*			expDir;
 	G4UIcmdWithADouble*		pressureCmd;
+	
 	G4UIcmdWithAString*		setSourceShieldCmd;
 	G4UIcmdWithAString*		addSourceShieldLayerCmd;
 	G4UIcmdWithADouble*		setSourceShieldInitialOffsetCmd;
+	
+	G4UIcmdWithAString*		setDetectorShieldCmd;
+	G4UIcmdWithAString*		addDetectorShieldLayerCmd;
+	G4UIcmdWithADouble*		setDetectorShieldInitialXOffsetCmd;
+	G4UIcmdWithADouble*		setDetectorShieldInitialYOffsetCmd;
+	
 	G4UIcmdWithAString*		setMaterialLogFileNameCmd;
 };
 

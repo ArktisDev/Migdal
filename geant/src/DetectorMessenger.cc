@@ -34,6 +34,26 @@ DetectorMessenger::DetectorMessenger(DetectorConstruction* detector)
 	setMaterialLogFileNameCmd->SetGuidance("Set material log file name");
 	setMaterialLogFileNameCmd->SetParameterName("Filename", false);
 	setMaterialLogFileNameCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
+	
+	setDetectorShieldCmd = new G4UIcmdWithAString("/exp/setDetectorShield", this);
+	setDetectorShieldCmd->SetGuidance("Set detector shielding structure in cm");
+	setDetectorShieldCmd->SetParameterName("Shielding configuration", false);
+	setDetectorShieldCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
+	
+	addDetectorShieldLayerCmd  = new G4UIcmdWithAString("/exp/addDetectorShieldLayer", this);
+	addDetectorShieldLayerCmd->SetGuidance("Add detector shielding layer in cm");
+	addDetectorShieldLayerCmd->SetParameterName("Shielding configuration", false);
+	addDetectorShieldLayerCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
+	
+	setDetectorShieldInitialXOffsetCmd = new G4UIcmdWithADouble("/exp/setDetectorShieldInitialXOffset", this);
+	setDetectorShieldInitialXOffsetCmd->SetGuidance("Set initial offset in cm");
+	setDetectorShieldInitialXOffsetCmd->SetParameterName("Initial offset (cm)", false);
+	setDetectorShieldInitialXOffsetCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
+	
+	setDetectorShieldInitialYOffsetCmd = new G4UIcmdWithADouble("/exp/setDetectorShieldInitialYOffset", this);
+	setDetectorShieldInitialYOffsetCmd->SetGuidance("Set initial offset in cm");
+	setDetectorShieldInitialYOffsetCmd->SetParameterName("Initial offset (cm)", false);
+	setDetectorShieldInitialYOffsetCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
 }
 
 DetectorMessenger::~DetectorMessenger()
@@ -43,6 +63,10 @@ DetectorMessenger::~DetectorMessenger()
 	delete setSourceShieldCmd;
 	delete addSourceShieldLayerCmd;
 	delete setSourceShieldInitialOffsetCmd;
+	delete setDetectorShieldCmd;
+	delete addDetectorShieldLayerCmd;
+	delete setDetectorShieldInitialXOffsetCmd;
+	delete setDetectorShieldInitialYOffsetCmd;
 }
 
 void DetectorMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue)
@@ -66,6 +90,22 @@ void DetectorMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue)
 	}
 	if (cmd == setMaterialLogFileNameCmd) {
 		detector->SetMaterialLogFilename(newValue);
+	}
+	if (cmd == setDetectorShieldCmd) {
+		detector->SetDetectorShielding(newValue);
+		geometryChanged = true;
+	}
+	if (cmd == addDetectorShieldLayerCmd) {
+		detector->AddDetectorShieldLayer(newValue);
+		geometryChanged = true;
+	}
+	if (cmd == setDetectorShieldInitialXOffsetCmd) {
+		detector->SetDetectorShieldInitialXOffset(setDetectorShieldInitialXOffsetCmd->GetNewDoubleValue(newValue));
+		geometryChanged = true;
+	}
+	if (cmd == setDetectorShieldInitialYOffsetCmd) {
+		detector->SetDetectorShieldInitialYOffset(setDetectorShieldInitialYOffsetCmd->GetNewDoubleValue(newValue));
+		geometryChanged = true;
 	}
 	
 	if (geometryChanged) {

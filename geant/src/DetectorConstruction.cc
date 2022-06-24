@@ -234,8 +234,14 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
 		G4VPhysicalVolume* SourceShield_physical = new G4PVPlacement(0, G4ThreeVector(0, 0, total_offset + thickness / 2), SourceShield_logical, "SourceShield_phys", World_logical, false, 0, checkOverlaps);
 		SourceShield_logical->SetVisAttributes(visAttr);
 		
+		shieldingRegion->AddRootLogicalVolume(SourceShield_logical);
+		
 		total_offset += thickness + spacing;
 	}
+	
+	// Keep materials and visattributes from source shielding and use them to construct detector shielding
+	
+	
 	
 	return World_physical;
 }
@@ -301,4 +307,38 @@ void DetectorConstruction::AddSourceShieldLayer(G4String shieldingConfiguration)
 
 void DetectorConstruction::SetSourceShieldInitialOffset(G4double initialOffset) {
 	this->sourceShieldInitialOffset = initialOffset * cm;
+}
+
+void DetectorConstruction::SetDetectorShieldInitialXOffset(G4double initialOffset) {
+	this->detectorShieldInitialXOffset = initialOffset;
+}
+
+void DetectorConstruction::SetDetectorShieldInitialYOffset(G4double initialOffset) {
+	this->detectorShieldInitialYOffset = initialOffset;
+}
+
+void DetectorConstruction::SetDetectorShielding(G4String shieldingConfiguration) {
+	sourceShieldStructure.clear();
+	
+	std::vector<std::string> strings = StringSplit(shieldingConfiguration, ' ');
+	
+	size_t i = 0;
+	while (i < strings.size()) {
+		std::vector<std::string> layer;
+		
+		for (int j = 0; j < 2; j++)
+			layer.push_back(strings[i++]);
+			
+		detectorShieldStructure.push_back(layer);
+	}
+}
+
+void DetectorConstruction::AddDetectorShieldLayer(G4String shieldingConfiguration) {
+	std::vector<std::string> strings = StringSplit(shieldingConfiguration, ' ');
+	
+	std::vector<std::string> layer;
+		
+	for (int i = 0; i < 2; i++)
+		layer.push_back(strings[i]);
+	detectorShieldStructure.push_back(layer);
 }
