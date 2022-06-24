@@ -7,6 +7,8 @@
 #include "ThreadPool.hpp"
 
 std::string SetupMacro(std::string baseMacroFile, std::string outputDir, int leadThickness, int polyThickness, int nParticles) {
+    double inches_to_cm = 2.54;
+    
     std::string runString = std::to_string(leadThickness) + "_" + std::to_string(polyThickness) + "_" + std::to_string(nParticles);
     std::string macroFile = outputDir + "Setup_" + runString + ".mac";
     
@@ -19,9 +21,9 @@ std::string SetupMacro(std::string baseMacroFile, std::string outputDir, int lea
     }
     ifs.close();
     
-    ofs << "/exp/addSourceShieldLayer " + std::to_string(leadThickness) + " Pb 2.4" << "\n";
+    ofs << "/exp/addSourceShieldLayer " + std::to_string(leadThickness * inches_to_cm) + " Pb 2.4" << "\n";
     ofs << "/exp/addSourceShieldLayer 0.1 Cd 0" << std::endl;
-    ofs << "/exp/addSourceShieldLayer " + std::to_string(polyThickness) + " Poly 2.4"  << "\n";
+    ofs << "/exp/addSourceShieldLayer " + std::to_string(polyThickness * inches_to_cm) + " Poly 2.4"  << "\n";
     
     ofs << "/file/setFileName " + outputDir + "output_" + runString + ".root" << "\n";
     ofs << "/file/setMaterialLogFilename " + outputDir + "materials.log" << "\n";
@@ -40,7 +42,6 @@ std::string SetupMacro(std::string baseMacroFile, std::string outputDir, int lea
 }
 
 int RunMacro(std::string macroFile, std::string migdalExeFile) {
-    std::cout << (migdalExeFile + " " + macroFile) << std::endl;
     system((migdalExeFile + " " + macroFile).c_str());
     
     return 0;

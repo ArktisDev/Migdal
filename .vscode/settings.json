@@ -130,6 +130,8 @@
         "gzip": "cpp",
         "directory": "cpp",
         "signature": "cpp",
-        "__functional_base": "cpp"
+        "__functional_base": "cpp",
+        "compare": "cpp",
+        "concepts": "cpp"
     }
 }

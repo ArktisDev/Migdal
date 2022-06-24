@@ -16,12 +16,12 @@ DetectorMessenger::DetectorMessenger(DetectorConstruction* detector)
   	pressureCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
 	
 	setSourceShieldCmd = new G4UIcmdWithAString("/exp/setSourceShield", this);
-	setSourceShieldCmd->SetGuidance("Set source shielding structure");
+	setSourceShieldCmd->SetGuidance("Set source shielding structure in cm");
   	setSourceShieldCmd->SetParameterName("Shielding configuration", false);
   	setSourceShieldCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
 	
 	addSourceShieldLayerCmd = new G4UIcmdWithAString("/exp/addSourceShieldLayer", this);
-	addSourceShieldLayerCmd->SetGuidance("Add source shielding layer");
+	addSourceShieldLayerCmd->SetGuidance("Add source shielding layer in cm");
   	addSourceShieldLayerCmd->SetParameterName("Shielding configuration", false);
   	addSourceShieldLayerCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
 	
