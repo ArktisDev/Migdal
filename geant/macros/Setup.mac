@@ -8,9 +8,13 @@
 
 # Args are: thickness in cm, material, hole radius in cm
 
-/exp/addSourceShieldLayer 5 Pb 2.4
-/exp/addSourceShieldLayer 0.03 Cd 0
-/exp/addSourceShieldLayer 25 Poly 2.4
+/exp/addSourceShieldLayer 10.16 Pb 2.4
+/exp/addSourceShieldLayer 0.1 Cd 0
+/exp/addSourceShieldLayer 20.32 Poly 2.4
+
+/exp/addDetectorShieldLayer 10.16 Pb
+/exp/addDetectorShieldLayer 0.1 Cd
+/exp/addDetectorShieldLayer 10.16 Poly
 
 /file/setFileName ../data/default/output.root
 /file/setMaterialLogFilename ../data/default/materials.log
