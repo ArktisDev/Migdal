@@ -9,7 +9,7 @@
 
 int main(int argc, char** argv)
 {
-    std::string inputFilename = "../../geant/data/output.root";
+    std::string inputFilename = "../../geant/data/default/output.root";
     
     if (argc == 2) {
         inputFilename = std::string(argv[1]);

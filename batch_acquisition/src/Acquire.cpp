@@ -16,7 +16,7 @@ int main() {
     
     std::string baseMacroFile = "../../geant/data/test/Setup.mac";
     
-    int nParticles = 1000;
+    int nParticles = 100000;
     
     CopyOutputScript(outputDir, script, scriptCopyName);
     

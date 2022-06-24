@@ -129,6 +129,7 @@
         "fsize": "cpp",
         "gzip": "cpp",
         "directory": "cpp",
-        "signature": "cpp"
+        "signature": "cpp",
+        "__functional_base": "cpp"
     }
 }

@@ -23,7 +23,7 @@ std::string SetupMacro(std::string baseMacroFile, std::string outputDir, int lea
     ofs << "/exp/addSourceShieldLayer 0.1 Cd 0" << std::endl;
     ofs << "/exp/addSourceShieldLayer " + std::to_string(polyThickness) + " Poly 2.4"  << "\n";
     
-    ofs << "/file/setFileName " + outputDir + "output_ " + runString + ".root" << "\n";
+    ofs << "/file/setFileName " + outputDir + "output_" + runString + ".root" << "\n";
     ofs << "/file/setMaterialLogFilename " + outputDir + "materials.log" << "\n";
     
     ofs << "/run/initialize" << "\n";
@@ -53,8 +53,8 @@ void RunSourceShielding(std::string baseMacroFile, std::string outputDir, std::s
     
     std::vector<std::unique_ptr<ThreadPool::ThreadResult<int>>> result_vec;
     
-    for (int lead = 2; lead <= 4; lead += 2) {
-        for (int poly = 1; poly <= 4; poly++) {
+    for (int lead = 2; lead <= 10; lead += 2) {
+        for (int poly = 1; poly <= 10; poly++) {
             std::string macroFile = SetupMacro(baseMacroFile, outputDir, lead, poly, nParticles);
             
             // run the macro with geant through tasking
