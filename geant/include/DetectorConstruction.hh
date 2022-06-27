@@ -21,13 +21,20 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 	G4VPhysicalVolume* Construct() override;
 	
 	void SetPressure(G4double pressure); // Set pressure in torr
-	void SetSourceShielding(G4String shieldingConfiguration);
+	
 	void AddSourceShieldLayer(G4String shieldingConfiguration);
-	void SetDetectorShielding(G4String shieldingConfiguration);
-	void AddDetectorShieldLayer(G4String shieldingConfiguration);
 	void SetSourceShieldInitialOffset(G4double initialOffset);
-	void SetDetectorShieldInitialXOffset(G4double initialOffset);
-	void SetDetectorShieldInitialYOffset(G4double initialOffset);
+	
+	void AddDetectorSideShieldLayer(G4String shieldingConfiguration);
+	void SetDetectorSideShieldInitialXOffset(G4double initialOffset);
+	void SetDetectorSideShieldInitialYOffset(G4double initialOffset);
+	void SetDetectorSideShieldFWidthDeltaZ(G4double forwardDeltaZ);
+	void SetDetectorSideShieldBWidthDeltaZ(G4double backwardDeltaZ);
+	
+	void AddDetectorBackShieldLayer(G4String shieldingConfiguration);
+	void SetDetectorBackShieldInitialOffset(G4double initialOffset);
+	void SetDetectorBackShieldWidthDeltaX(G4double deltaX);
+	void SetDetectorBackShieldWidthDeltaY(G4double deltaY);
 	
 	void SetMaterialLogFilename(G4String filename);
 	
@@ -39,14 +46,22 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 	G4Region*			shieldingRegion;
 	
 	G4double 	  	    pressure;
-	G4double			sourceShieldInitialOffset;
-	G4double			detectorShieldInitialXOffset;
-	G4double			detectorShieldInitialYOffset;
-	
-	std::string materialLogFilename = std::string("../data/materials.log");
 	
 	std::vector<std::vector<std::string>> 	sourceShieldStructure;
-	std::vector<std::vector<std::string>> 	detectorShieldStructure;
+	G4double								sourceShieldInitialOffset;
+	
+	std::vector<std::vector<std::string>> 	detectorSideShieldStructure;
+	G4double								detectorSideShieldInitialXOffset;
+	G4double								detectorSideShieldInitialYOffset;
+	G4double								detectorSideShieldFWidthDeltaZ;
+	G4double								detectorSideShieldBWidthDeltaZ;
+	
+	std::vector<std::vector<std::string>> 	detectorBackShieldStructure;
+	G4double								detectorBackShieldInitialOffset;
+	G4double								detectorBackShieldWidthDeltaX;
+	G4double								detectorBackShieldWidthDeltaY;
+	
+	std::string materialLogFilename = std::string("../data/materials.log");
 };
 
 #endif // DETECTORCONSTRUCTION_H

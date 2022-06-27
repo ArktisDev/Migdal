@@ -3,6 +3,7 @@
 #include "DetectorConstruction.hh"
 
 #include "G4RunManager.hh"
+#include "G4SystemOfUnits.hh"
 
 DetectorMessenger::DetectorMessenger(DetectorConstruction* detector)
 : detector( detector )
@@ -14,11 +15,6 @@ DetectorMessenger::DetectorMessenger(DetectorConstruction* detector)
   	pressureCmd->SetGuidance("Set Pressure in Torr");
   	pressureCmd->SetParameterName("Pressure", false);
   	pressureCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
-	
-	setSourceShieldCmd = new G4UIcmdWithAString("/exp/setSourceShield", this);
-	setSourceShieldCmd->SetGuidance("Set source shielding structure in cm");
-  	setSourceShieldCmd->SetParameterName("Shielding configuration", false);
-  	setSourceShieldCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
 	
 	addSourceShieldLayerCmd = new G4UIcmdWithAString("/exp/addSourceShieldLayer", this);
 	addSourceShieldLayerCmd->SetGuidance("Add source shielding layer in cm");
@@ -35,38 +31,70 @@ DetectorMessenger::DetectorMessenger(DetectorConstruction* detector)
 	setMaterialLogFileNameCmd->SetParameterName("Filename", false);
 	setMaterialLogFileNameCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
 	
-	setDetectorShieldCmd = new G4UIcmdWithAString("/exp/setDetectorShield", this);
-	setDetectorShieldCmd->SetGuidance("Set detector shielding structure in cm");
-	setDetectorShieldCmd->SetParameterName("Shielding configuration", false);
-	setDetectorShieldCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
+	addDetectorSideShieldLayerCmd  = new G4UIcmdWithAString("/exp/addDetectorSideShieldLayer", this);
+	addDetectorSideShieldLayerCmd->SetGuidance("Add detector shielding layer in cm");
+	addDetectorSideShieldLayerCmd->SetParameterName("Shielding configuration", false);
+	addDetectorSideShieldLayerCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
 	
-	addDetectorShieldLayerCmd  = new G4UIcmdWithAString("/exp/addDetectorShieldLayer", this);
-	addDetectorShieldLayerCmd->SetGuidance("Add detector shielding layer in cm");
-	addDetectorShieldLayerCmd->SetParameterName("Shielding configuration", false);
-	addDetectorShieldLayerCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
+	setDetectorSideShieldInitialXOffsetCmd = new G4UIcmdWithADouble("/exp/setDetectorSideShieldInitialXOffset", this);
+	setDetectorSideShieldInitialXOffsetCmd->SetGuidance("Set initial offset in cm");
+	setDetectorSideShieldInitialXOffsetCmd->SetParameterName("Initial offset (cm)", false);
+	setDetectorSideShieldInitialXOffsetCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
 	
-	setDetectorShieldInitialXOffsetCmd = new G4UIcmdWithADouble("/exp/setDetectorShieldInitialXOffset", this);
-	setDetectorShieldInitialXOffsetCmd->SetGuidance("Set initial offset in cm");
-	setDetectorShieldInitialXOffsetCmd->SetParameterName("Initial offset (cm)", false);
-	setDetectorShieldInitialXOffsetCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
+	setDetectorSideShieldInitialYOffsetCmd = new G4UIcmdWithADouble("/exp/setDetectorSideShieldInitialYOffset", this);
+	setDetectorSideShieldInitialYOffsetCmd->SetGuidance("Set initial offset in cm");
+	setDetectorSideShieldInitialYOffsetCmd->SetParameterName("Initial offset (cm)", false);
+	setDetectorSideShieldInitialYOffsetCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
 	
-	setDetectorShieldInitialYOffsetCmd = new G4UIcmdWithADouble("/exp/setDetectorShieldInitialYOffset", this);
-	setDetectorShieldInitialYOffsetCmd->SetGuidance("Set initial offset in cm");
-	setDetectorShieldInitialYOffsetCmd->SetParameterName("Initial offset (cm)", false);
-	setDetectorShieldInitialYOffsetCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
+	setDetectorSideShieldBWidthDeltaZCmd = new G4UIcmdWithADouble("/exp/setDetectorSideShieldBWidthDeltaZ", this);
+	setDetectorSideShieldBWidthDeltaZCmd->SetGuidance("Set backward delta width in cm");
+	setDetectorSideShieldBWidthDeltaZCmd->SetParameterName("Delta width (cm)", false);
+	setDetectorSideShieldBWidthDeltaZCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
+	
+	setDetectorSideShieldFWidthDeltaZCmd = new G4UIcmdWithADouble("/exp/setDetectorSideShieldFWidthDeltaZ", this);
+	setDetectorSideShieldFWidthDeltaZCmd->SetGuidance("Set forward delta width in cm");
+	setDetectorSideShieldFWidthDeltaZCmd->SetParameterName("Delta width (cm)", false);
+	setDetectorSideShieldFWidthDeltaZCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
+	
+	addDetectorBackShieldLayerCmd  = new G4UIcmdWithAString("/exp/addDetectorBackShieldLayer", this);
+	addDetectorBackShieldLayerCmd->SetGuidance("Add detector shielding layer in cm");
+	addDetectorBackShieldLayerCmd->SetParameterName("Shielding configuration", false);
+	addDetectorBackShieldLayerCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
+	
+	setDetectorBackShieldInitialOffsetCmd = new G4UIcmdWithADouble("/exp/setDetectorBackShieldInitialOffset", this);
+	setDetectorBackShieldInitialOffsetCmd->SetGuidance("Set initial offset in cm");
+	setDetectorBackShieldInitialOffsetCmd->SetParameterName("Initial offset (cm)", false);
+	setDetectorBackShieldInitialOffsetCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
+	
+	setDetectorBackShieldWidthDeltaXCmd = new G4UIcmdWithADouble("/exp/setDetectorBackShieldWidthDeltaX", this);
+	setDetectorBackShieldWidthDeltaXCmd->SetGuidance("Set delta width in cm");
+	setDetectorBackShieldWidthDeltaXCmd->SetParameterName("Delta width (cm)", false);
+	setDetectorBackShieldWidthDeltaXCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
+	
+	setDetectorBackShieldWidthDeltaYCmd = new G4UIcmdWithADouble("/exp/setDetectorBackShieldWidthDeltaY", this);
+	setDetectorBackShieldWidthDeltaYCmd->SetGuidance("Set delta width in cm");
+	setDetectorBackShieldWidthDeltaYCmd->SetParameterName("Delta width (cm)", false);
+	setDetectorBackShieldWidthDeltaYCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
 }
 
 DetectorMessenger::~DetectorMessenger()
 {
-    delete expDir;
-	delete pressureCmd;
-	delete setSourceShieldCmd;
-	delete addSourceShieldLayerCmd;
-	delete setSourceShieldInitialOffsetCmd;
-	delete setDetectorShieldCmd;
-	delete addDetectorShieldLayerCmd;
-	delete setDetectorShieldInitialXOffsetCmd;
-	delete setDetectorShieldInitialYOffsetCmd;
+    if (expDir) 								delete expDir;
+	if (pressureCmd) 							delete pressureCmd;
+	
+	if (addSourceShieldLayerCmd) 				delete addSourceShieldLayerCmd;
+	if (setSourceShieldInitialOffsetCmd) 		delete setSourceShieldInitialOffsetCmd;
+	
+	if (addDetectorSideShieldLayerCmd) 			delete addDetectorSideShieldLayerCmd;
+	if (setDetectorSideShieldInitialXOffsetCmd) delete setDetectorSideShieldInitialXOffsetCmd;
+	if (setDetectorSideShieldInitialYOffsetCmd) delete setDetectorSideShieldInitialYOffsetCmd;
+	if (setDetectorSideShieldBWidthDeltaZCmd) delete setDetectorSideShieldBWidthDeltaZCmd;
+	if (setDetectorSideShieldFWidthDeltaZCmd) delete setDetectorSideShieldFWidthDeltaZCmd;
+	
+	if (addDetectorBackShieldLayerCmd) 			delete addDetectorBackShieldLayerCmd;
+	if (setDetectorBackShieldInitialOffsetCmd) 	delete setDetectorBackShieldInitialOffsetCmd;
+	if (setDetectorBackShieldWidthDeltaXCmd) 	delete setDetectorBackShieldWidthDeltaXCmd;
+	if (setDetectorBackShieldWidthDeltaYCmd) 	delete setDetectorBackShieldWidthDeltaYCmd;
 }
 
 void DetectorMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue)
@@ -75,36 +103,52 @@ void DetectorMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue)
     if (cmd == pressureCmd) {
 		detector->SetPressure(pressureCmd->GetNewDoubleValue(newValue));
 		geometryChanged = true;
-	}
-	if (cmd == setSourceShieldCmd) {
-		detector->SetSourceShielding(newValue);
-		geometryChanged = true;
-	}
+	} else
 	if (cmd == addSourceShieldLayerCmd) {
 		detector->AddSourceShieldLayer(newValue);
 		geometryChanged = true;
-	}
+	} else
 	if (cmd == setSourceShieldInitialOffsetCmd) {
-		detector->SetSourceShieldInitialOffset(setSourceShieldInitialOffsetCmd->GetNewDoubleValue(newValue));
+		detector->SetSourceShieldInitialOffset(setSourceShieldInitialOffsetCmd->GetNewDoubleValue(newValue) * cm);
 		geometryChanged = true;
-	}
+	} else
 	if (cmd == setMaterialLogFileNameCmd) {
 		detector->SetMaterialLogFilename(newValue);
-	}
-	if (cmd == setDetectorShieldCmd) {
-		detector->SetDetectorShielding(newValue);
+	} else
+	if (cmd == addDetectorSideShieldLayerCmd) {
+		detector->AddDetectorSideShieldLayer(newValue);
 		geometryChanged = true;
-	}
-	if (cmd == addDetectorShieldLayerCmd) {
-		detector->AddDetectorShieldLayer(newValue);
+	} else
+	if (cmd == setDetectorSideShieldInitialXOffsetCmd) {
+		detector->SetDetectorSideShieldInitialXOffset(setDetectorSideShieldInitialXOffsetCmd->GetNewDoubleValue(newValue) * cm);
 		geometryChanged = true;
-	}
-	if (cmd == setDetectorShieldInitialXOffsetCmd) {
-		detector->SetDetectorShieldInitialXOffset(setDetectorShieldInitialXOffsetCmd->GetNewDoubleValue(newValue));
+	} else
+	if (cmd == setDetectorSideShieldInitialYOffsetCmd) {
+		detector->SetDetectorSideShieldInitialYOffset(setDetectorSideShieldInitialYOffsetCmd->GetNewDoubleValue(newValue) * cm);
 		geometryChanged = true;
-	}
-	if (cmd == setDetectorShieldInitialYOffsetCmd) {
-		detector->SetDetectorShieldInitialYOffset(setDetectorShieldInitialYOffsetCmd->GetNewDoubleValue(newValue));
+	} else
+	if (cmd == setDetectorSideShieldFWidthDeltaZCmd) {
+		detector->SetDetectorSideShieldFWidthDeltaZ(setDetectorSideShieldFWidthDeltaZCmd->GetNewDoubleValue(newValue) * cm);
+		geometryChanged = true;
+	} else
+	if (cmd == setDetectorSideShieldBWidthDeltaZCmd) {
+		detector->SetDetectorSideShieldBWidthDeltaZ(setDetectorSideShieldBWidthDeltaZCmd->GetNewDoubleValue(newValue) * cm);
+		geometryChanged = true;
+	} else
+	if (cmd == addDetectorBackShieldLayerCmd) {
+		detector->AddDetectorBackShieldLayer(newValue);
+		geometryChanged = true;
+	} else
+	if (cmd == setDetectorBackShieldInitialOffsetCmd) {
+		detector->SetDetectorBackShieldInitialOffset(setDetectorBackShieldInitialOffsetCmd->GetNewDoubleValue(newValue) * cm);
+		geometryChanged = true;
+	} else
+	if (cmd == setDetectorBackShieldWidthDeltaXCmd) {
+		detector->SetDetectorBackShieldWidthDeltaX(setDetectorBackShieldWidthDeltaXCmd->GetNewDoubleValue(newValue) * cm);
+		geometryChanged = true;
+	} else
+	if (cmd == setDetectorBackShieldWidthDeltaYCmd) {
+		detector->SetDetectorBackShieldWidthDeltaY(setDetectorBackShieldWidthDeltaYCmd->GetNewDoubleValue(newValue) * cm);
 		geometryChanged = true;
 	}
 	
@@ -115,7 +159,7 @@ void DetectorMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue)
 		
 		runManager->ReinitializeGeometry(true);
 		
-		// GEANT4 BUG
+		// NOTE: GEANT4 BUG
 		// When running in GUI mode, if you change the geometry, the vis system gets very confused.
 		// This should not be happening, and it is fixed in a new beta release
 		// https://geant4-forum.web.cern.ch/t/gui-crashed-after-modifying-geometry-with-ui-commands-in-geant4-11-example-anaex01/7960/4

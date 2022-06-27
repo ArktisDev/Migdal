@@ -24,7 +24,8 @@ const G4double inch = 2.54 * cm;
 
 DetectorConstruction::DetectorConstruction()
 : detectorMessenger(new DetectorMessenger(this)), detectorRegion(0), shieldingRegion(0), pressure(75), 
-  sourceShieldInitialOffset(1 * cm), detectorShieldInitialXOffset(1 * cm), detectorShieldInitialYOffset(1 * cm)
+  sourceShieldInitialOffset(1 * cm), detectorSideShieldInitialXOffset(1 * cm), detectorSideShieldInitialYOffset(1 * cm),
+  detectorBackShieldInitialOffset(1 * cm), detectorBackShieldWidthDeltaX(0), detectorBackShieldWidthDeltaY(0)
 {
 	
 }
@@ -163,19 +164,19 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
     G4VPhysicalVolume*  WindowB_physical  		= new G4PVPlacement(0, G4ThreeVector(0, 0, -detector_hz - 0.5 * windowThickness), Window_logical, "DetectorCaseWindowB_phys", World_logical, false, 0, checkOverlaps);
     Window_logical->SetVisAttributes(window_visAttr);
 	
-	G4double 			motherboard_hx			= 20 * cm;
+	G4double 			motherboard_longSide	= 20 * cm;
 	G4double 			motherboard_hy			= 0.2 * cm;
-	G4double			motherboard_hz			= 10 * cm;
+	G4double			motherboard_shortSide	= 10 * cm;
 	G4Material*			motherboard_mat			= kapton;
 	G4VisAttributes*    motherboard_visAttr		= new G4VisAttributes(G4Color::Green());
 	G4double			motherboard_yOffset		= -1 * cm;
 	G4double			motherboard_dist		= 15 * cm;
 	
-	G4Box*	            Motherboard1_solid    	= new G4Box("Motherboard1_sol", motherboard_hx, motherboard_hy, motherboard_hz);
+	G4Box*	            Motherboard1_solid    	= new G4Box("Motherboard1_sol", motherboard_longSide, motherboard_hy, motherboard_shortSide);
 	G4LogicalVolume*	Motherboard1_logical  	= new G4LogicalVolume(Motherboard1_solid, motherboard_mat, "Motherboard1_sol");
     G4VPhysicalVolume*  Motherboard1A_physical	= new G4PVPlacement(0, G4ThreeVector(0, wireplane_pos.y() + motherboard_yOffset, motherboard_dist + detector_hz), Motherboard1_logical, "Motherboard1a_phys", World_logical, false, 0, checkOverlaps);
     G4VPhysicalVolume*  Motherboard1B_physical	= new G4PVPlacement(0, G4ThreeVector(0, wireplane_pos.y() + motherboard_yOffset, -(motherboard_dist + detector_hz)), Motherboard1_logical, "Motherboard1b_phys", World_logical, false, 0, checkOverlaps);
-    G4Box*	            Motherboard2_solid    	= new G4Box("Motherboard2_sol", motherboard_hz, motherboard_hy, motherboard_hx);
+    G4Box*	            Motherboard2_solid    	= new G4Box("Motherboard2_sol", motherboard_shortSide, motherboard_hy, motherboard_longSide);
     G4LogicalVolume*	Motherboard2_logical  	= new G4LogicalVolume(Motherboard2_solid, motherboard_mat, "Motherboard2_sol");
     G4VPhysicalVolume*  Motherboard2A_physical	= new G4PVPlacement(0, G4ThreeVector(motherboard_dist + detector_hx, wireplane_pos.y() - motherboard_yOffset, 0), Motherboard2_logical, "Motherboard2a_phys", World_logical, false, 0, checkOverlaps);
     G4VPhysicalVolume*  Motherboard2B_physical	= new G4PVPlacement(0, G4ThreeVector(-(motherboard_dist + detector_hx), wireplane_pos.y() - motherboard_yOffset, 0), Motherboard2_logical, "Motherboard2b_phys", World_logical, false, 0, checkOverlaps);
@@ -203,7 +204,7 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
 	G4double radius = 50 * cm;
 	G4double spacing = 1 * cm;
 	
-	G4double total_offset = detector_hz + motherboard_dist + motherboard_hz + sourceShieldInitialOffset;
+	G4double total_offset = detector_hz + motherboard_dist + motherboard_shortSide + detectorSideShieldFWidthDeltaZ + sourceShieldInitialOffset;
 	
 	for (const std::vector<std::string>& layer : sourceShieldStructure) {
 		G4double thickness = std::stod(layer[0]) * cm;
@@ -238,15 +239,18 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
 		total_offset += thickness + spacing;
 	}
 	
-	// Keep materials and visattributes from source shielding and use them to construct detector shielding
+	// Keep materials and visattributes from source shielding and use them to construct detector side shielding
 	
-	G4double totalXoffset = detector_hx + motherboard_dist + motherboard_hz + detectorShieldInitialXOffset;
-	G4double totalYoffset = detector_hy + detectorCase_thickY + detectorShieldInitialYOffset;
-	G4double detectorShieldHz = detector_hz + motherboard_dist + motherboard_hz;
+	G4double totalXoffset = detector_hx + motherboard_dist + motherboard_shortSide + detectorSideShieldInitialXOffset;
+	G4double totalYoffset = detector_hy + detectorCase_thickY + detectorSideShieldInitialYOffset;
+	G4double detectorSideShieldFHz = detector_hz + motherboard_dist + motherboard_shortSide + detectorSideShieldFWidthDeltaZ;
+	G4double detectorSideShieldBHz = detector_hz + motherboard_dist + motherboard_shortSide + detectorSideShieldBWidthDeltaZ;
+	G4double detectorSideShieldHz = (detectorSideShieldFHz + detectorSideShieldBHz) / 2;
+	G4double detectorZpos = detectorSideShieldFHz - detectorSideShieldHz;
 	
 	spacing = 1 * cm;
 	
-	for (const std::vector<std::string>& layer : detectorShieldStructure) {
+	for (const std::vector<std::string>& layer : detectorSideShieldStructure) {
 		G4double thickness = std::stod(layer[0]) * cm;
 		G4Material* shield_mat = nullptr;
 		G4VisAttributes* visAttr = nullptr;
@@ -268,18 +272,59 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
 				std::string("Material ").append(" is not recognized").c_str());
 		}
 		
-		// Now to construct the shielding as concentric cubes
-		G4Box* 		DetectorShield_solid1 = new G4Box("DetectorShield_sol", totalXoffset + thickness, totalYoffset + thickness, detectorShieldHz);
-		G4Box* 		DetectorShield_cutout = new G4Box("DetectorShield_cutout", totalXoffset, totalYoffset, detectorShieldHz + 1 * cm);
-		G4VSolid* 	DetectorShield_solid2 = new G4SubtractionSolid("DetecotrShield_sol2", DetectorShield_solid1, DetectorShield_cutout);
-		G4LogicalVolume* DetectorShield_logical = new G4LogicalVolume(DetectorShield_solid2, shield_mat, "DetectorShield_logical");
-		G4VPhysicalVolume* DetectorShield_physical = new G4PVPlacement(0, G4ThreeVector(0), DetectorShield_logical, "DetectorShield_phys", World_logical, false, 0, checkOverlaps);
-		DetectorShield_logical->SetVisAttributes(visAttr);
+		// Now to construct the shielding as concentric boxes
+		G4Box* 		DetectorSideShield_solid1 = new G4Box("DetectorSideShield_sol", totalXoffset + thickness, totalYoffset + thickness, detectorSideShieldHz);
+		G4Box* 		DetectorSideShield_cutout = new G4Box("DetectorSideShield_cutout", totalXoffset, totalYoffset, detectorSideShieldHz + 1 * cm);
+		G4VSolid* 	DetectorSideShield_solid2 = new G4SubtractionSolid("DetectorSideShield_sol2", DetectorSideShield_solid1, DetectorSideShield_cutout);
+		G4LogicalVolume* DetectorSideShield_logical = new G4LogicalVolume(DetectorSideShield_solid2, shield_mat, "DetectorSideShield_logical");
+		G4VPhysicalVolume* DetectorSideShield_physical = new G4PVPlacement(0, G4ThreeVector(0, 0, detectorZpos), DetectorSideShield_logical, "DetectorSideShield_phys", World_logical, false, 0, checkOverlaps);
+		DetectorSideShield_logical->SetVisAttributes(visAttr);
 		
 		shieldingRegion->AddRootLogicalVolume(Detector_logical);
 		
 		totalXoffset += thickness + spacing;
 		totalYoffset += thickness + spacing;
+	}
+	
+	// Keep materials and vis attributes again and use them to construct detector back shielding
+	
+	total_offset = detector_hz + motherboard_dist + motherboard_shortSide + detectorSideShieldBWidthDeltaZ + detectorBackShieldInitialOffset;
+	G4double detectorBackShieldHx = detector_hx + motherboard_dist + motherboard_shortSide + detectorBackShieldWidthDeltaX;
+	G4double detectorBackShieldHy = detector_hy + detectorCase_thickY + detectorBackShieldWidthDeltaY;
+	
+	spacing = 1 * cm;
+	
+	for (const std::vector<std::string>& layer : detectorBackShieldStructure) {
+		G4double thickness = std::stod(layer[0]) * cm;
+		G4Material* shield_mat = nullptr;
+		G4VisAttributes* visAttr = nullptr;
+		
+		if (layer[1] == "Poly") {
+			shield_mat = poly;
+			visAttr = poly_visAttr;
+		} else if (layer[1] == "Cd") {
+			shield_mat = cadmium;
+			visAttr = cadmium_visAttr;
+		} else if (layer[1] == "Pb") {
+			shield_mat = lead;
+			visAttr = lead_visAttr;
+		} else if (layer[1] == "BPoly") {
+			shield_mat = boratedPoly;
+			visAttr = boratedPoly_visAttr;
+		} else {
+			G4Exception("DetectorConstruction::DefineVolumes()", "-1", G4ExceptionSeverity::FatalException, 
+				std::string("Material ").append(" is not recognized").c_str());
+		}
+		
+		// Now to construct the shielding as plates
+		G4Box* 			DetectorBackShield_solid = new G4Box("DetectorBackShield_sol", detectorBackShieldHx, detectorBackShieldHy, thickness / 2);
+		G4LogicalVolume* DetectorBackShield_logical = new G4LogicalVolume(DetectorBackShield_solid, shield_mat, "DetectorBackShield_logical");
+		G4VPhysicalVolume* DetectorBackShield_physical = new G4PVPlacement(0, G4ThreeVector(0, 0, - total_offset - thickness / 2), DetectorBackShield_logical, "DetectorBackShield_phys", World_logical, false, 0, checkOverlaps);
+		DetectorBackShield_logical->SetVisAttributes(visAttr);
+		
+		shieldingRegion->AddRootLogicalVolume(DetectorBackShield_logical);
+		
+		total_offset += thickness + spacing;
 	}
 	
 	return World_physical;
@@ -314,70 +359,56 @@ std::vector<std::string> StringSplit(std::string input, char delim = ' ') {
 	return strings;
 }
 
-void DetectorConstruction::SetSourceShielding(G4String shieldingConfiguration) {
-	sourceShieldStructure.clear();
-	
-	std::vector<std::string> strings = StringSplit(shieldingConfiguration, ' ');
-	
-	size_t i = 0;
-	while (i < strings.size()) {
-		std::vector<std::string> layer;
-		
-		for (int j = 0; j < 3; j++)
-			layer.push_back(strings[i++]);
-			
-		sourceShieldStructure.push_back(layer);
-	}
-}
-
 void DetectorConstruction::AddSourceShieldLayer(G4String shieldingConfiguration) {
 	std::vector<std::string> strings = StringSplit(shieldingConfiguration, ' ');
 	
-	if (strings.size() == 2) {
+	if (strings.size() < 3) {
 		strings.push_back("0");
 	}
 	
-	std::vector<std::string> layer;
-		
-	for (int i = 0; i < 3; i++)
-		layer.push_back(strings[i]);
-	sourceShieldStructure.push_back(layer);
+	sourceShieldStructure.push_back(strings);
 }
 
 void DetectorConstruction::SetSourceShieldInitialOffset(G4double initialOffset) {
-	this->sourceShieldInitialOffset = initialOffset * cm;
+	this->sourceShieldInitialOffset = initialOffset;
 }
 
-void DetectorConstruction::SetDetectorShieldInitialXOffset(G4double initialOffset) {
-	this->detectorShieldInitialXOffset = initialOffset;
+void DetectorConstruction::SetDetectorSideShieldInitialXOffset(G4double initialOffset) {
+	this->detectorSideShieldInitialXOffset = initialOffset;
 }
 
-void DetectorConstruction::SetDetectorShieldInitialYOffset(G4double initialOffset) {
-	this->detectorShieldInitialYOffset = initialOffset;
+void DetectorConstruction::SetDetectorSideShieldInitialYOffset(G4double initialOffset) {
+	this->detectorSideShieldInitialYOffset = initialOffset;
 }
 
-void DetectorConstruction::SetDetectorShielding(G4String shieldingConfiguration) {
-	sourceShieldStructure.clear();
-	
+void DetectorConstruction::AddDetectorSideShieldLayer(G4String shieldingConfiguration) {
 	std::vector<std::string> strings = StringSplit(shieldingConfiguration, ' ');
 	
-	size_t i = 0;
-	while (i < strings.size()) {
-		std::vector<std::string> layer;
-		
-		for (int j = 0; j < 2; j++)
-			layer.push_back(strings[i++]);
-			
-		detectorShieldStructure.push_back(layer);
-	}
+	detectorSideShieldStructure.push_back(strings);
 }
 
-void DetectorConstruction::AddDetectorShieldLayer(G4String shieldingConfiguration) {
+void DetectorConstruction::AddDetectorBackShieldLayer(G4String shieldingConfiguration) {
 	std::vector<std::string> strings = StringSplit(shieldingConfiguration, ' ');
 	
-	std::vector<std::string> layer;
-		
-	for (int i = 0; i < 2; i++)
-		layer.push_back(strings[i]);
-	detectorShieldStructure.push_back(layer);
+	detectorBackShieldStructure.push_back(strings);
+}
+
+void DetectorConstruction::SetDetectorBackShieldInitialOffset(G4double initialOffset) {
+	this->detectorBackShieldInitialOffset = initialOffset;
+}
+
+void DetectorConstruction::SetDetectorBackShieldWidthDeltaX(G4double deltaX) {
+	this->detectorBackShieldWidthDeltaX = deltaX;
+}
+
+void DetectorConstruction::SetDetectorBackShieldWidthDeltaY(G4double deltaY) {
+	this->detectorBackShieldWidthDeltaY = deltaY;
+}
+
+void DetectorConstruction::SetDetectorSideShieldFWidthDeltaZ(G4double forwardDeltaZ) {
+	this->detectorSideShieldFWidthDeltaZ = forwardDeltaZ;
+}
+
+void DetectorConstruction::SetDetectorSideShieldBWidthDeltaZ(G4double backwardDeltaZ) {
+	this->detectorSideShieldBWidthDeltaZ = backwardDeltaZ;
 }

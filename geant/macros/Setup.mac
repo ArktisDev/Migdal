@@ -12,9 +12,17 @@
 /exp/addSourceShieldLayer 0.1 Cd 0
 /exp/addSourceShieldLayer 20.32 Poly 2.4
 
-/exp/addDetectorShieldLayer 10.16 Pb
-/exp/addDetectorShieldLayer 0.1 Cd
-/exp/addDetectorShieldLayer 10.16 Poly
+/exp/addDetectorSideShieldLayer 10.16 Pb
+/exp/addDetectorSideShieldLayer 0.1 Cd
+/exp/addDetectorSideShieldLayer 10.16 Poly
+/exp/setDetectorSideShieldFWidthDeltaZ 5
+/exp/setDetectorSideShieldBWidthDeltaZ 5
+
+/exp/addDetectorBackShieldLayer 10.16 Pb
+/exp/addDetectorBackShieldLayer 0.1 Cd
+/exp/addDetectorBackShieldLayer 10.16 Poly
+/exp/setDetectorBackShieldWidthDeltaX 20
+/exp/setDetectorBackShieldWidthDeltaY 20
 
 /file/setFileName ../data/default/output.root
 /file/setMaterialLogFilename ../data/default/materials.log
