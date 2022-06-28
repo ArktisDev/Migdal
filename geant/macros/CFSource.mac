@@ -4,4 +4,5 @@
 /gps/pos/type Point
 /gps/pos/centre 0 0 40 cm
 /gps/ang/type iso
-/gps/energy 1. eV
+# This is the kinetic energy of the Cf. Set it to be low so the decay happens before the thing can really move
+/gps/energy 0.001 eV
