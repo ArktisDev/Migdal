@@ -133,6 +133,7 @@
         "__functional_base": "cpp",
         "compare": "cpp",
         "concepts": "cpp",
-        "style_parser": "cpp"
+        "style_parser": "cpp",
+        "DetectorSurfaceFlux.C": "cpp"
     }
 }
