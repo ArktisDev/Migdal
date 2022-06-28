@@ -12,8 +12,8 @@
 # /gps/energy forces mono distribution, /gps/ene/mono does not (for what reason????)
 # Also if you run /gps/source/list you can ignore the "Energy" row, it is just plain incorrect.
 # The energy row shows the previous shot particle's energy, which is 1 MeV if you have not shot anything. - Lars
-/gps/ene/mono 2.5 MeV
-/gps/ene/sigma 0.1 MeV
+/gps/ene/mono 2.48 MeV
+/gps/ene/sigma 0.04 MeV
 
 # /gps/source/add 0
 # /gps/particle gamma

@@ -132,6 +132,7 @@
         "signature": "cpp",
         "__functional_base": "cpp",
         "compare": "cpp",
-        "concepts": "cpp"
+        "concepts": "cpp",
+        "style_parser": "cpp"
     }
 }

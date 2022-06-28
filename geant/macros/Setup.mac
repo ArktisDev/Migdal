@@ -8,21 +8,19 @@
 
 # Args are: thickness in cm, material, hole radius in cm
 
-/exp/addSourceShieldLayer 10.16 Pb 2.4
-/exp/addSourceShieldLayer 0.1 Cd 0
-/exp/addSourceShieldLayer 20.32 Poly 2.4
+/exp/addSourceShieldLayer 0.5 Pb 0 50 0
+/exp/addSourceShieldLayer 10.16 BPoly 2.5 50 0
+/exp/addSourceShieldLayer 2.54 Pb 0 50 0
 
-/exp/addDetectorSideShieldLayer 10.16 Pb
-/exp/addDetectorSideShieldLayer 0.1 Cd
-/exp/addDetectorSideShieldLayer 10.16 Poly
+/exp/addDetectorSideShieldLayer 0.5 Pb 0
+/exp/addDetectorSideShieldLayer 5.08 BPoly 0
+/exp/addDetectorSideShieldLayer 5.08 Pb 0
 /exp/setDetectorSideShieldFWidthDeltaZ 5
-/exp/setDetectorSideShieldBWidthDeltaZ 5
+/exp/setDetectorSideShieldBWidthDeltaZ 15
 
-/exp/addDetectorBackShieldLayer 10.16 Pb
-/exp/addDetectorBackShieldLayer 0.1 Cd
-/exp/addDetectorBackShieldLayer 10.16 Poly
-/exp/setDetectorBackShieldWidthDeltaX 20
-/exp/setDetectorBackShieldWidthDeltaY 20
+/exp/setDetectorBackShieldInitialOffset -14
+/exp/addDetectorBackShieldLayer 0.5 Pb 0 0
+/exp/addDetectorBackShieldLayer 5.08 BPoly 4 0
 
 /file/setFileName ../data/default/output.root
 /file/setMaterialLogFilename ../data/default/materials.log
