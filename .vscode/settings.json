@@ -132,6 +132,9 @@
         "signature": "cpp",
         "__functional_base": "cpp",
         "compare": "cpp",
-        "concepts": "cpp"
+        "concepts": "cpp",
+        "base_histo": "cpp",
+        "c1d": "cpp",
+        "c2d": "cpp"
     }
 }

@@ -39,7 +39,7 @@ int main(int argc, char** argv)
     char name[12];
     char side[6];
     
-    TTree* tree = new TTree("Entering", "Title");
+    TTree* tree = new TTree("Aggregate Entering", "Title");
     tree->Branch("Side", &side, "side[6]/C");
     tree->Branch("Name", &name, "name[12]/C");
     tree->Branch("Count", &count, "Count/I");
@@ -108,10 +108,9 @@ int main(int argc, char** argv)
     TotalSurfaceLeavingCounts(&total);
     PerSurfaceLeavingCounts(&posx, &negx, &posy, &negy, &posz, &negz);
     
-    inFile.Close();
     outFile.cd();
     
-    tree = new TTree("Leaving", "Title");
+    tree = new TTree("Aggregate Leaving", "Title");
     tree->Branch("Side", &side, "side[6]/C");
     tree->Branch("Name", &name, "name[12]/C");
     tree->Branch("Count", &count, "Count/I");
@@ -174,6 +173,117 @@ int main(int argc, char** argv)
     
     tree->Write();
     tree->Delete();
-
+    
+    inFile.cd();
+    
+    std::unordered_map<std::string, std::unordered_map<std::string, std::vector<std::vector<float>>>> outputData;
+    PerParticleEnteringFlux(&outputData);
+    
+    outFile.cd();
+    
+    TTree* parentTree = new TTree("Flux Entering", "Title");
+    
+    for (const std::pair<std::string, std::unordered_map<std::string, std::vector<std::vector<float>>>>& pair : outputData) {
+        std::string particleName = pair.first;
+        tree = new TTree(particleName.c_str(), "Title");
+        // // Friend new tree so we see it as "branch" of parent
+        //parentTree->AddFriend(particleName.c_str());
+        
+        struct DataStruct {
+            double coord1;
+            double coord2;
+            double energy;
+        };
+        
+        // Iterate over different sides
+        for (const std::pair<std::string, std::vector<std::vector<float>>>& pair : pair.second) {
+            std::string side = pair.first;
+            
+            DataStruct data;
+            
+            // Add a new one and turn it on
+            tree->Branch(side.c_str(), &data, "coord1/D:coord2/D:energy/D");
+            
+            // turn off all branches
+            tree->SetBranchStatus("*", false);
+            
+            // turn on the one we want
+            tree->SetBranchStatus(side.c_str(), true);
+            
+            // enter all rows of data into branch
+            for (const std::vector<float>& row : pair.second) {
+                data.coord1 = row[0];
+                data.coord2 = row[1];
+                data.energy = row[2];
+                
+                tree->Fill();
+            }
+        }
+        
+        // Turn all branches on now
+        tree->SetBranchStatus("*", true);
+        
+        // Done filling up tree with data, write it
+        tree->Write();
+    }
+    
+    std::cout << "Got here" << std::endl;
+    
+    //parentTree->Write();
+    //parentTree->Delete();
+    
+    // // Repeat everything for leaving flux
+    
+    // inFile.cd();
+    // PerParticleLeavingFlux(&outputData);
+    
+    // outFile.cd();
+    
+    // parentTree = new TTree("Flux Leaving", "Title");
+    
+    // for (const std::pair<std::string, std::unordered_map<std::string, std::vector<std::vector<float>>>>& pair : outputData) {
+    //     std::string particleName = pair.first;
+    //     tree = new TTree(particleName.c_str(), "Title");
+    //     // Friend new tree so we see it as "branch" of parent
+    //     parentTree->AddFriend(particleName.c_str());
+        
+    //     struct DataStruct {
+    //         double coord1;
+    //         double coord2;
+    //         double energy;
+    //     };
+        
+    //     // Iterate over different sides
+    //     for (const std::pair<std::string, std::vector<std::vector<float>>>& pair : pair.second) {
+    //         std::string side = pair.first;
+            
+    //         DataStruct data;
+            
+    //         // turn off all branches
+    //         tree->SetBranchStatus("*", false);
+            
+    //         // Add a new one and turn it on
+    //         tree->Branch(side.c_str(), &data, "coord1/D:coord2/D:energy/D");
+    //         tree->SetBranchStatus(side.c_str(), true);
+            
+    //         // enter all rows of data into branch
+    //         for (const std::vector<float>& row : pair.second) {
+    //             data.coord1 = row[0];
+    //             data.coord2 = row[1];
+    //             data.energy = row[2];
+                
+    //             tree->Fill();
+    //         }
+    //     }
+        
+    //     // Done filling up tree with data, write it and delete
+    //     tree->Write();
+    //     tree->Delete();
+    // }
+    
+    // parentTree->Write();
+    // parentTree->Delete();
+    
+    inFile.Close();
     outFile.Close();
 }

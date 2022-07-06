@@ -148,4 +148,148 @@ void PerSurfaceLeavingCounts(   std::unordered_map<std::string, int>* posx, std:
     }
 }
 
+// outputData is a lookup table per particle name, to a lookup table per detector side, to a list of chosen data per step into detector
+void PerParticleEnteringFlux(std::unordered_map<std::string, std::unordered_map<std::string, std::vector<std::vector<float>>>>* outputData) 
+{
+    outputData->clear();
+    
+    EnteringData data;
+    MetaData metadata;
+    metadata.ReadEntry(0);
+    
+    for (int i = 0; i < data.entries; i++) {
+        data.ReadEntry(i);
+        
+        std::string particleName = data.particleName;
+        
+        // If the particle doesn't exist in map yet, initialize it
+        if (outputData->count(particleName) == 0) {
+            (*outputData)[particleName] = std::unordered_map<std::string, std::vector<std::vector<float>>>();
+            (*outputData)[particleName]["posx"] = std::vector<std::vector<float>>();
+            (*outputData)[particleName]["posy"] = std::vector<std::vector<float>>();
+            (*outputData)[particleName]["posz"] = std::vector<std::vector<float>>();
+            (*outputData)[particleName]["negx"] = std::vector<std::vector<float>>();
+            (*outputData)[particleName]["negy"] = std::vector<std::vector<float>>();
+            (*outputData)[particleName]["negz"] = std::vector<std::vector<float>>();
+        }
+        
+        std::string side;
+        std::vector<float> eventData = std::vector<float>();
+        
+        // Classify which side the particle is from, if fail to classify -> increase tolerance level until you find some side
+        double tol = 1e-8;
+        while(true) {
+            // Try to find a surface within tolerance
+            if        (abs(data.x - metadata.detector_hx) < tol) {
+                side = "posx";
+                eventData.emplace_back(data.y);
+                eventData.emplace_back(data.z);
+                break;
+            } else if (abs(data.x + metadata.detector_hx) < tol) {
+                side = "negx";
+                eventData.emplace_back(data.y);
+                eventData.emplace_back(data.z);
+                break;
+            } else if (abs(data.y - metadata.detector_hy) < tol) {
+                side = "posy";
+                eventData.emplace_back(data.x);
+                eventData.emplace_back(data.z);
+                break;
+            } else if (abs(data.y + metadata.detector_hy) < tol) {
+                side = "negy";
+                eventData.emplace_back(data.x);
+                eventData.emplace_back(data.z);
+                break;
+            } else if (abs(data.z - metadata.detector_hz) < tol) {
+                side = "posz";
+                eventData.emplace_back(data.x);
+                eventData.emplace_back(data.y);
+                break;
+            } else if (abs(data.z + metadata.detector_hz) < tol) {
+                side = "negz";
+                eventData.emplace_back(data.x);
+                eventData.emplace_back(data.y);
+                break;
+            }
+            tol *= 10;
+        }
+        eventData.emplace_back(data.energy);
+        
+        // Add data to list of data for particle for side and then go to next particle
+        (*outputData)[particleName][side].emplace_back(eventData);
+    }
+}
+
+// outputData is a lookup table per particle name, to a lookup table per detector side, to a list of chosen data per step into detector
+void PerParticleLeavingFlux(std::unordered_map<std::string, std::unordered_map<std::string, std::vector<std::vector<float>>>>* outputData) 
+{
+    outputData->clear();
+    
+    LeavingData data;
+    MetaData metadata;
+    metadata.ReadEntry(0);
+    
+    for (int i = 0; i < data.entries; i++) {
+        data.ReadEntry(i);
+        
+        std::string particleName = data.particleName;
+        
+        // If the particle doesn't exist in map yet, initialize it
+        if (outputData->count(particleName) == 0) {
+            (*outputData)[particleName] = std::unordered_map<std::string, std::vector<std::vector<float>>>();
+            (*outputData)[particleName]["posx"] = std::vector<std::vector<float>>();
+            (*outputData)[particleName]["posy"] = std::vector<std::vector<float>>();
+            (*outputData)[particleName]["posz"] = std::vector<std::vector<float>>();
+            (*outputData)[particleName]["negx"] = std::vector<std::vector<float>>();
+            (*outputData)[particleName]["negy"] = std::vector<std::vector<float>>();
+            (*outputData)[particleName]["negz"] = std::vector<std::vector<float>>();
+        }
+        
+        std::string side;
+        std::vector<float> eventData = std::vector<float>();
+        
+        // Classify which side the particle is from, if fail to classify -> increase tolerance level until you find some side
+        double tol = 1e-8;
+        while(true) {
+            // Try to find a surface within tolerance
+            if        (abs(data.x - metadata.detector_hx) < tol) {
+                side = "posx";
+                eventData.emplace_back(data.y);
+                eventData.emplace_back(data.z);
+                break;
+            } else if (abs(data.x + metadata.detector_hx) < tol) {
+                side = "negx";
+                eventData.emplace_back(data.y);
+                eventData.emplace_back(data.z);
+                break;
+            } else if (abs(data.y - metadata.detector_hy) < tol) {
+                side = "posy";
+                eventData.emplace_back(data.x);
+                eventData.emplace_back(data.z);
+                break;
+            } else if (abs(data.y + metadata.detector_hy) < tol) {
+                side = "negy";
+                eventData.emplace_back(data.x);
+                eventData.emplace_back(data.z);
+                break;
+            } else if (abs(data.z - metadata.detector_hz) < tol) {
+                side = "posz";
+                eventData.emplace_back(data.x);
+                eventData.emplace_back(data.y);
+                break;
+            } else if (abs(data.z + metadata.detector_hz) < tol) {
+                side = "negz";
+                eventData.emplace_back(data.x);
+                eventData.emplace_back(data.y);
+                break;
+            }
+            tol *= 10;
+        }
+        eventData.emplace_back(data.energy);
+        
+        // Add data to list of data for particle for side and then go to next particle
+        (*outputData)[particleName][side].emplace_back(eventData);
+    }
+}
+
 #endif // DETECTORSURFACECOUNTS_H
