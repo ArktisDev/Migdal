@@ -135,6 +135,8 @@
         "concepts": "cpp",
         "base_histo": "cpp",
         "c1d": "cpp",
-        "c2d": "cpp"
+        "c2d": "cpp",
+        "style_parser": "cpp",
+        "DetectorSurfaceFlux.C": "cpp"
     }
 }

@@ -60,7 +60,7 @@ void DetectorConstruction::DefineMaterials()
 	
 	G4double fracMass;
 	
-	density = 11.29*g/cm3;
+	density = 11.29 * g / cm3;
 	G4Material* newLead = new G4Material("Impure_Pb", density, ncomp=10);
 	newLead->AddMaterial(nist->FindOrBuildMaterial("G4_Pb"),fracMass=99.9655*perCent);
   	newLead->AddMaterial(nist->FindOrBuildMaterial("G4_Sb"),fracMass=0.001*perCent);
@@ -73,7 +73,7 @@ void DetectorConstruction::DefineMaterials()
   	newLead->AddMaterial(nist->FindOrBuildMaterial("G4_Ag"),fracMass=0.003*perCent);
   	newLead->AddMaterial(nist->FindOrBuildMaterial("G4_Zn"),fracMass=0.0005*perCent);
 	
-	density = 1.04;
+	density = 1.04 * g / cm3;
 	G4Material* boratedPoly = new G4Material("Borated Poly", density, ncomp=2);
 	boratedPoly->AddMaterial(nist->FindOrBuildMaterial("G4_POLYETHYLENE"), fracMass = 95 * perCent);
 	boratedPoly->AddMaterial(nist->FindOrBuildMaterial("G4_B"), fracMass = 5 * perCent);
@@ -199,16 +199,15 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
 	G4VisAttributes*    lead_visAttr 		= new G4VisAttributes(G4Color::Yellow());
 	G4VisAttributes*    cadmium_visAttr 	= new G4VisAttributes(G4Color::Blue());
 	G4VisAttributes*    poly_visAttr 		= new G4VisAttributes(G4Color::Brown());
-	G4VisAttributes*    boratedPoly_visAttr = new G4VisAttributes(G4Color::Red());
-	
-	G4double radius = 50 * cm;
-	G4double spacing = 1 * cm;
+	G4VisAttributes*    boratedPoly_visAttr = new G4VisAttributes(G4Color(0.004, 0.19, 0.125));
 	
 	G4double total_offset = detector_hz + motherboard_dist + motherboard_shortSide + detectorSideShieldFWidthDeltaZ + sourceShieldInitialOffset;
 	
 	for (const std::vector<std::string>& layer : sourceShieldStructure) {
 		G4double thickness = std::stod(layer[0]) * cm;
 		G4double innerRadius = std::stod(layer[2]) * cm;
+		G4double radius = std::stod(layer[3]) * cm;
+		G4double spacing = std::stod(layer[4]) * cm;
 		G4Material* shield_mat = nullptr;
 		G4VisAttributes* visAttr = nullptr;
 		
@@ -248,10 +247,9 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
 	G4double detectorSideShieldHz = (detectorSideShieldFHz + detectorSideShieldBHz) / 2;
 	G4double detectorZpos = detectorSideShieldFHz - detectorSideShieldHz;
 	
-	spacing = 1 * cm;
-	
 	for (const std::vector<std::string>& layer : detectorSideShieldStructure) {
 		G4double thickness = std::stod(layer[0]) * cm;
+		G4double spacing = std::stod(layer[2]) * cm;
 		G4Material* shield_mat = nullptr;
 		G4VisAttributes* visAttr = nullptr;
 		
@@ -292,10 +290,10 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
 	G4double detectorBackShieldHx = detector_hx + motherboard_dist + motherboard_shortSide + detectorBackShieldWidthDeltaX;
 	G4double detectorBackShieldHy = detector_hy + detectorCase_thickY + detectorBackShieldWidthDeltaY;
 	
-	spacing = 1 * cm;
-	
 	for (const std::vector<std::string>& layer : detectorBackShieldStructure) {
 		G4double thickness = std::stod(layer[0]) * cm;
+		G4double innerRadius = std::stod(layer[2]) * cm; // for cutout in middle
+		G4double spacing = std::stod(layer[3]) * cm;
 		G4Material* shield_mat = nullptr;
 		G4VisAttributes* visAttr = nullptr;
 		
@@ -316,9 +314,16 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
 				std::string("Material ").append(" is not recognized").c_str());
 		}
 		
+		G4VSolid* DetectorBackShield_solid3;
 		// Now to construct the shielding as plates
-		G4Box* 			DetectorBackShield_solid = new G4Box("DetectorBackShield_sol", detectorBackShieldHx, detectorBackShieldHy, thickness / 2);
-		G4LogicalVolume* DetectorBackShield_logical = new G4LogicalVolume(DetectorBackShield_solid, shield_mat, "DetectorBackShield_logical");
+		G4Box* 			DetectorBackShield_solid1 = new G4Box("DetectorBackShield_sol1", detectorBackShieldHx, detectorBackShieldHy, thickness / 2);
+		if (innerRadius > 0) {
+			G4Tubs*			DetectorBackShield_solid2 = new G4Tubs("DetectorBackShield_sol2", 0, innerRadius, thickness / 2 + 1 * cm, 0, 360 * degree);
+			DetectorBackShield_solid3 				  = new G4SubtractionSolid("DetectorBackShield_sol3", DetectorBackShield_solid1, DetectorBackShield_solid2);
+		} else {
+			DetectorBackShield_solid3 = DetectorBackShield_solid1;
+		}
+		G4LogicalVolume* DetectorBackShield_logical = new G4LogicalVolume(DetectorBackShield_solid3, shield_mat, "DetectorBackShield_logical");
 		G4VPhysicalVolume* DetectorBackShield_physical = new G4PVPlacement(0, G4ThreeVector(0, 0, - total_offset - thickness / 2), DetectorBackShield_logical, "DetectorBackShield_phys", World_logical, false, 0, checkOverlaps);
 		DetectorBackShield_logical->SetVisAttributes(visAttr);
 		
@@ -362,8 +367,29 @@ std::vector<std::string> StringSplit(std::string input, char delim = ' ') {
 void DetectorConstruction::AddSourceShieldLayer(G4String shieldingConfiguration) {
 	std::vector<std::string> strings = StringSplit(shieldingConfiguration, ' ');
 	
+	// Thickness
+	if (strings.size() < 1) {
+		strings.push_back("1");
+	}
+	
+	// Material
+	if (strings.size() < 2) {
+		strings.push_back("Poly");	
+	}
+	
+	// Inner hole size
 	if (strings.size() < 3) {
 		strings.push_back("0");
+	}
+	
+	// Disk radius
+	if (strings.size() < 4) {
+		strings.push_back("50");
+	}
+	
+	// Spacing
+	if (strings.size() < 5) {
+		strings.push_back("1");
 	}
 	
 	sourceShieldStructure.push_back(strings);
@@ -384,11 +410,46 @@ void DetectorConstruction::SetDetectorSideShieldInitialYOffset(G4double initialO
 void DetectorConstruction::AddDetectorSideShieldLayer(G4String shieldingConfiguration) {
 	std::vector<std::string> strings = StringSplit(shieldingConfiguration, ' ');
 	
+	// Thickness
+	if (strings.size() < 1) {
+		strings.push_back("1");
+	}
+	
+	// Material
+	if (strings.size() < 2) {
+		strings.push_back("Poly");
+	}
+	
+	// Spacing
+	if (strings.size() < 3) {
+		strings.push_back("1");
+	}
+	
 	detectorSideShieldStructure.push_back(strings);
 }
 
 void DetectorConstruction::AddDetectorBackShieldLayer(G4String shieldingConfiguration) {
 	std::vector<std::string> strings = StringSplit(shieldingConfiguration, ' ');
+	
+	// Thickness
+	if (strings.size() < 1) {
+		strings.push_back("1");
+	}
+	
+	// Material
+	if (strings.size() < 2) {
+		strings.push_back("Poly");
+	}
+	
+	// Cutout in middle
+	if (strings.size() < 3) {
+		strings.push_back("0");
+	}
+	
+	// Spacing
+	if (strings.size() < 4) {
+		strings.push_back("1");
+	}
 	
 	detectorBackShieldStructure.push_back(strings);
 }
