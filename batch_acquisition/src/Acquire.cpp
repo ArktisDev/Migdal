@@ -10,11 +10,11 @@
 int main() {
     std::string migdalExeFile = "../../geant/build/Migdal";
     
-    std::string outputDir = "../../geant/data/test/";
+    std::string outputDir = "../../geant/data/sourceshielding2/";
     std::string script = "../include/SourceShielding.hpp";
     std::string scriptCopyName = "SourceShielding.hpp";
     
-    std::string baseMacroFile = "../../geant/data/test/Setup.mac";
+    std::string baseMacroFile = "../../geant/data/sourceshielding2/Basemac";
     
     int nParticles = 100000;
     

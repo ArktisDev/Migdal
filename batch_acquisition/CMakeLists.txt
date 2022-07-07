@@ -33,6 +33,7 @@ foreach ( sourceFile ${sources} )
     set_target_properties(${source}
         PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY "."
+        CXX_STANDARD 17
     )
 endforeach ( sourceFile ${sources} )
 

@@ -25,6 +25,7 @@ const G4double inch = 2.54 * cm;
 DetectorConstruction::DetectorConstruction()
 : detectorMessenger(new DetectorMessenger(this)), detectorRegion(0), shieldingRegion(0), pressure(75), 
   sourceShieldInitialOffset(1 * cm), detectorSideShieldInitialXOffset(1 * cm), detectorSideShieldInitialYOffset(1 * cm),
+  detectorSideShieldFWidthDeltaZ(0 * cm), detectorSideShieldBWidthDeltaZ(0 * cm),
   detectorBackShieldInitialOffset(1 * cm), detectorBackShieldWidthDeltaX(0), detectorBackShieldWidthDeltaY(0)
 {
 	

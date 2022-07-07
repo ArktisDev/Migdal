@@ -22,7 +22,7 @@ std::string SetupMacro(std::string baseMacroFile, std::string outputDir, int lea
     ifs.close();
     
     ofs << "/exp/addSourceShieldLayer " + std::to_string(polyThickness * inches_to_cm) + " BPoly 2.5 50 0"  << "\n";
-    ofs << "/exp/addSourceShieldLayer " + std::to_string(leadThickness * inches_to_cm) + " Pb 0 50 0" << "\n";
+    ofs << "/exp/addSourceShieldLayer " + std::to_string(leadThickness * inches_to_cm) + " Pb 2.5 50 0" << "\n";
     
     ofs << "/file/setFileName " + outputDir + "output_" + runString + ".root" << "\n";
     ofs << "/file/setMaterialLogFilename " + outputDir + "materials.log" << "\n";

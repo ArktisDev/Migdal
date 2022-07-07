@@ -2,7 +2,9 @@
 **/build/
 
 # Geant output data
-data/
+**/data/**/*.root
+**/data/**/*.mac
+**/data/**/*.log
 
 # Python
 **/__pycache__/
