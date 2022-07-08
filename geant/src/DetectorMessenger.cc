@@ -16,6 +16,11 @@ DetectorMessenger::DetectorMessenger(DetectorConstruction* detector)
   	pressureCmd->SetParameterName("Pressure", false);
   	pressureCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
 	
+	windowRadiusCmd = new G4UIcmdWithADouble("/exp/setWindowRadius", this);
+  	windowRadiusCmd->SetGuidance("Set radius in cm");
+  	windowRadiusCmd->SetParameterName("Radius", false);
+  	windowRadiusCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
+	
 	addSourceShieldLayerCmd = new G4UIcmdWithAString("/exp/addSourceShieldLayer", this);
 	addSourceShieldLayerCmd->SetGuidance("Add source shielding layer in cm");
   	addSourceShieldLayerCmd->SetParameterName("Shielding configuration", false);
@@ -81,6 +86,7 @@ DetectorMessenger::~DetectorMessenger()
 {
     if (expDir) 								delete expDir;
 	if (pressureCmd) 							delete pressureCmd;
+	if (windowRadiusCmd)						delete windowRadiusCmd;
 	
 	if (addSourceShieldLayerCmd) 				delete addSourceShieldLayerCmd;
 	if (setSourceShieldInitialOffsetCmd) 		delete setSourceShieldInitialOffsetCmd;
@@ -103,6 +109,9 @@ void DetectorMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue)
     if (cmd == pressureCmd) {
 		detector->SetPressure(pressureCmd->GetNewDoubleValue(newValue));
 		geometryChanged = true;
+	} else
+	if (cmd == windowRadiusCmd) {
+		detector->SetWindowRadius(windowRadiusCmd->GetNewDoubleValue(newValue) * cm);
 	} else
 	if (cmd == addSourceShieldLayerCmd) {
 		detector->AddSourceShieldLayer(newValue);

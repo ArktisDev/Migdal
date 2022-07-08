@@ -23,6 +23,7 @@ class DetectorMessenger : public G4UImessenger
 	
 	G4UIdirectory*			expDir;
 	G4UIcmdWithADouble*		pressureCmd;
+	G4UIcmdWithADouble*		windowRadiusCmd;
 	
 	G4UIcmdWithAString*		addSourceShieldLayerCmd;
 	G4UIcmdWithADouble*		setSourceShieldInitialOffsetCmd;

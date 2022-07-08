@@ -23,7 +23,7 @@
 const G4double inch = 2.54 * cm;
 
 DetectorConstruction::DetectorConstruction()
-: detectorMessenger(new DetectorMessenger(this)), detectorRegion(0), shieldingRegion(0), pressure(75), 
+: detectorMessenger(new DetectorMessenger(this)), detectorRegion(0), shieldingRegion(0), pressure(75), windowRadius(1 * inch),
   sourceShieldInitialOffset(1 * cm), detectorSideShieldInitialXOffset(1 * cm), detectorSideShieldInitialYOffset(1 * cm),
   detectorSideShieldFWidthDeltaZ(0 * cm), detectorSideShieldBWidthDeltaZ(0 * cm),
   detectorBackShieldInitialOffset(1 * cm), detectorBackShieldWidthDeltaX(0), detectorBackShieldWidthDeltaY(0)
@@ -168,23 +168,23 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
 	G4Material* 		detectorCase_mat 		= aluminum;
 	G4VisAttributes*    detectorCase_visAttr	= new G4VisAttributes(G4Color::Gray());
 	
-	G4double            windowRadius			= 1 * inch;
-	G4double			windowThickness			= 1 * mm;
+	G4double            window_Radius			= windowRadius;
+	G4double			window_Thickness			= 1 * mm;
 	G4Material* 		window_mat 				= mylar;
 	G4VisAttributes*    window_visAttr 			= new G4VisAttributes(G4Color(0.1,0.2,0.5));
 	
 	G4Box*	            DetectorCase0_solid    	= new G4Box("DetectorCase0_sol", detector_hx + detectorCase_thickX, detector_hy + detectorCase_thickY, detector_hz + detectorCase_thickZ); //box
 	G4VSolid*           DetectorCase1_solid    	= new G4SubtractionSolid("DetectorCase1_sol", DetectorCase0_solid, Detector_solid, 0, G4ThreeVector(0, 0, 0)); //minus detector
-    G4Tubs*             DetectorCase2_solid    	= new G4Tubs("DetectorCase2_sol", 0, windowRadius, 2 * detectorCase_thickZ, 0, 360 * degree); //window cut out
+    G4Tubs*             DetectorCase2_solid    	= new G4Tubs("DetectorCase2_sol", 0, window_Radius, 2 * detectorCase_thickZ, 0, 360 * degree); //window cut out
     G4VSolid*           DetectorCase3_solid    	= new G4SubtractionSolid("DetectorCase3_sol", DetectorCase1_solid, DetectorCase2_solid, 0, G4ThreeVector(0, 0, detector_hz + 0.5 * detectorCase_thickZ)); //front window
     G4VSolid*           DetectorCase4_solid    	= new G4SubtractionSolid("DetectorCase4_sol", DetectorCase3_solid, DetectorCase2_solid, 0, G4ThreeVector(0, 0, -detector_hz - 0.5 * detectorCase_thickZ)); //back window
     G4LogicalVolume*	DetectorCase_logical   	= new G4LogicalVolume(DetectorCase4_solid, detectorCase_mat, "DetectorCase_log");
     G4VPhysicalVolume*  DetectorCase_physical  	= new G4PVPlacement(0, G4ThreeVector(0, 0, 0), DetectorCase_logical, "DetectorCase_phys", World_logical, false, 0, checkOverlaps);
 	DetectorCase_logical->SetVisAttributes(detectorCase_visAttr);
-    G4Tubs*             Window_solid      		= new G4Tubs("DetectorCaseWindow_sol", 0, windowRadius, 0.5 * windowThickness, 0, 360 * degree); //window
+    G4Tubs*             Window_solid      		= new G4Tubs("DetectorCaseWindow_sol", 0, window_Radius, 0.5 * window_Thickness, 0, 360 * degree); //window
     G4LogicalVolume*	Window_logical    		= new G4LogicalVolume(Window_solid, window_mat, "DetectorCaseWindow_sol");
-    G4VPhysicalVolume*  WindowF_physical  		= new G4PVPlacement(0, G4ThreeVector(0, 0, detector_hz + 0.5 * windowThickness), Window_logical, "DetectorCaseWindowF_phys", World_logical, false, 0, checkOverlaps);
-    G4VPhysicalVolume*  WindowB_physical  		= new G4PVPlacement(0, G4ThreeVector(0, 0, -detector_hz - 0.5 * windowThickness), Window_logical, "DetectorCaseWindowB_phys", World_logical, false, 0, checkOverlaps);
+    G4VPhysicalVolume*  WindowF_physical  		= new G4PVPlacement(0, G4ThreeVector(0, 0, detector_hz + 0.5 * window_Thickness), Window_logical, "DetectorCaseWindowF_phys", World_logical, false, 0, checkOverlaps);
+    G4VPhysicalVolume*  WindowB_physical  		= new G4PVPlacement(0, G4ThreeVector(0, 0, -detector_hz - 0.5 * window_Thickness), Window_logical, "DetectorCaseWindowB_phys", World_logical, false, 0, checkOverlaps);
     Window_logical->SetVisAttributes(window_visAttr);
 	
 	G4double 			motherboard_longSide	= 20 * cm;
@@ -495,4 +495,8 @@ void DetectorConstruction::SetDetectorSideShieldFWidthDeltaZ(G4double forwardDel
 
 void DetectorConstruction::SetDetectorSideShieldBWidthDeltaZ(G4double backwardDeltaZ) {
 	this->detectorSideShieldBWidthDeltaZ = backwardDeltaZ;
+}
+
+void DetectorConstruction::SetWindowRadius(G4double radius) {
+	this->windowRadius = radius;
 }

@@ -21,6 +21,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 	G4VPhysicalVolume* Construct() override;
 	
 	void SetPressure(G4double pressure); // Set pressure in torr
+	void SetWindowRadius(G4double radius); // in cm
 	
 	void AddSourceShieldLayer(G4String shieldingConfiguration);
 	void SetSourceShieldInitialOffset(G4double initialOffset);
@@ -46,6 +47,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 	G4Region*			shieldingRegion;
 	
 	G4double 	  	    pressure;
+	G4double			windowRadius;
 	
 	std::vector<std::vector<std::string>> 	sourceShieldStructure;
 	G4double								sourceShieldInitialOffset;
