@@ -1,0 +1,4 @@
+This run was changing the amount of borated poly and lead 
+in the front shielding of the detector while keeping a collimator
+hole in the poly but not the lead. Read a macro file to see 
+structure of shielding.

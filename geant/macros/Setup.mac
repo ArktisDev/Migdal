@@ -11,7 +11,7 @@
 /exp/setSourceShieldInitialOffset 0
 /exp/addSourceShieldLayer 0.5 Pb 0 50 0
 /exp/addSourceShieldLayer 10.16 BPoly 2.5 50 0
-/exp/addSourceShieldLayer 2.54 Pb 0 50 0
+/exp/addSourceShieldLayer 2.54 Pb 2.5 50 0
 
 /exp/setDetectorSideShieldInitialXOffset 0
 /exp/setDetectorSideShieldInitialYOffset 0

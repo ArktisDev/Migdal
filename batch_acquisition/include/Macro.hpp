@@ -1,15 +1,15 @@
-#ifndef SOURCESHIELDING_H
-#define SOURCESHIELDING_H
+#ifndef MACRO_H
+#define MACRO_H
 
 #include <iostream>
 #include <fstream>
 
 #include "ThreadPool.hpp"
 
-std::string SetupMacro(std::string baseMacroFile, std::string outputDir, int leadThickness, int polyThickness, int nParticles) {
+std::string SetupMacro(std::string baseMacroFile, std::string outputDir, int collimatorRadius, int nParticles) {
     double inches_to_cm = 2.54;
     
-    std::string runString = std::to_string(leadThickness) + "_" + std::to_string(polyThickness) + "_" + std::to_string(nParticles);
+    std::string runString = std::to_string(collimatorRadius / 4.) + "_" + std::to_string(nParticles);
     std::string macroFile = outputDir + "Setup_" + runString + ".mac";
     
     std::ifstream ifs(baseMacroFile);
@@ -21,8 +21,13 @@ std::string SetupMacro(std::string baseMacroFile, std::string outputDir, int lea
     }
     ifs.close();
     
-    ofs << "/exp/addSourceShieldLayer " + std::to_string(polyThickness * inches_to_cm) + " BPoly 2.5 50 0"  << "\n";
-    ofs << "/exp/addSourceShieldLayer " + std::to_string(leadThickness * inches_to_cm) + " Pb 0 50 0" << "\n";
+    int polyThickness = 4;
+    int leadThickness = 4;
+    
+    ofs << "/exp/addSourceShieldLayer " + std::to_string(polyThickness * inches_to_cm) + " BPoly " << std::to_string(collimatorRadius * inches_to_cm / 4) << " 50 0"  << "\n";
+    ofs << "/exp/addSourceShieldLayer " + std::to_string(leadThickness * inches_to_cm) + " Pb " << std::to_string(collimatorRadius * inches_to_cm / 4) << " 50 0" << "\n";
+    
+    ofs << "/exp/setWindowRadius " + std::to_string(5 * inches_to_cm) << "\n";
     
     ofs << "/file/setFileName " + outputDir + "output_" + runString + ".root" << "\n";
     ofs << "/file/setMaterialLogFilename " + outputDir + "materials.log" << "\n";
@@ -54,17 +59,16 @@ void RunSourceShielding(std::string baseMacroFile, std::string outputDir, std::s
     
     std::vector<std::unique_ptr<ThreadPool::ThreadResult<int>>> result_vec;
     
-    for (int lead = 2; lead <= 10; lead += 2) {
-        for (int poly = 2; poly <= 10; poly += 2) {
-            std::string macroFile = SetupMacro(baseMacroFile, outputDir, lead, poly, nParticles);
-            
-            // run the macro with geant through tasking
-            auto result = ThreadMgr.addTask(RunMacro, macroFile, migdalExeFile);
-            result_vec.emplace_back(std::move(result));
-            
-            // So we get good random generation at least
-            std::this_thread::sleep_for(std::chrono::seconds(1));
-        }
+    // Radius will be divided by 4 later
+    for (int radius = 1; radius <= 20; radius += 1) {
+        std::string macroFile = SetupMacro(baseMacroFile, outputDir, radius, nParticles);
+        
+        // run the macro with geant through tasking
+        auto result = ThreadMgr.addTask(RunMacro, macroFile, migdalExeFile);
+        result_vec.emplace_back(std::move(result));
+        
+        // So we get good random generation at least
+        std::this_thread::sleep_for(std::chrono::seconds(1));
     }
     
     // Wait for all threads to finish by retrieving results
@@ -78,4 +82,4 @@ void RunSourceShielding(std::string baseMacroFile, std::string outputDir, std::s
     }
 }
 
-#endif // SOURCESHIELDING_H
+#endif // MACRO_H

@@ -5,16 +5,16 @@
 #include "CopyOutputScript.hpp"
 
 
-#include "SourceShielding.hpp"
+#include "Macro.hpp"
 
 int main() {
     std::string migdalExeFile = "../../geant/build/Migdal";
     
-    std::string outputDir = "../../geant/data/sourceshielding2/";
-    std::string script = "../include/SourceShielding.hpp";
-    std::string scriptCopyName = "SourceShielding.hpp";
+    std::string outputDir = "../../geant/data/collimator1/";
+    std::string script = "../include/Macro.hpp";
+    std::string scriptCopyName = "Macro.hpp";
     
-    std::string baseMacroFile = "../../geant/data/sourceshielding2/Basemac";
+    std::string baseMacroFile = "../../geant/data/collimator1/Basemac";
     
     int nParticles = 100000;
     
