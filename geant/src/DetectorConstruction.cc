@@ -10,7 +10,6 @@
 #include "G4LogicalVolume.hh"
 #include "G4PVPlacement.hh"
 #include "G4VisAttributes.hh"
-#include "G4SystemOfUnits.hh"
 #include "G4UnitsTable.hh"
 #include "G4MaterialTable.hh"
 #include "G4SubtractionSolid.hh"
@@ -19,8 +18,6 @@
 #include "DetectorMessenger.hh"
 
 #include <iostream>
-
-const G4double inch = 2.54 * cm;
 
 DetectorConstruction::DetectorConstruction()
 : detectorMessenger(new DetectorMessenger(this)), detectorRegion(0), shieldingRegion(0), pressure(75), windowRadius(1 * inch),
@@ -119,9 +116,9 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
 	G4VPhysicalVolume*	World_physical 	= new G4PVPlacement(0, G4ThreeVector(), World_logical, "World_phys", 0, false, 0, checkOverlaps);
 	World_logical->SetVisAttributes(world_visAttr);
 	
-	G4double 			detector_hx 		= 5 * inch;
-	G4double 			detector_hy 		= 5 * inch;
-	G4double 			detector_hz 		= 5 * inch;
+	G4double 			detector_hx 		= this->detector_hx;
+	G4double 			detector_hy 		= this->detector_hy;
+	G4double 			detector_hz 		= this->detector_hz;
 	G4Material* 		detector_mat 		= CF4;
 	G4VisAttributes*    detector_visAttr  	= new G4VisAttributes(G4Color::Cyan());
 

@@ -3,11 +3,14 @@
 
 #include "G4VUserDetectorConstruction.hh"
 #include "G4Region.hh"
+#include "G4SystemOfUnits.hh"
 
 #include <string>
 #include <vector>
 
 class DetectorMessenger;
+
+const G4double inch = 2.54 * cm;
 
 class DetectorConstruction : public G4VUserDetectorConstruction
 {
@@ -40,6 +43,9 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 	void SetMaterialLogFilename(G4String filename);
 	
 	G4double GetPressure() {return this->pressure;}
+	G4double GetDetectorHx() {return this->detector_hx;}
+	G4double GetDetectorHy() {return this->detector_hy;}
+	G4double GetDetectorHz() {return this->detector_hz;}
 	
   private:
 	DetectorMessenger*  detectorMessenger;
@@ -48,6 +54,10 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 	
 	G4double 	  	    pressure;
 	G4double			windowRadius;
+	
+	G4double 			detector_hx 		= 5 * inch;
+	G4double 			detector_hy 		= 5 * inch;
+	G4double 			detector_hz 		= 5 * inch;
 	
 	std::vector<std::vector<std::string>> 	sourceShieldStructure;
 	G4double								sourceShieldInitialOffset;

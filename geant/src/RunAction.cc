@@ -84,9 +84,9 @@ void RunAction::BeginOfRunAction(const G4Run*)
     G4int id = 0;
     G4int tupleID = 4;
     
-    man->FillNtupleDColumn(tupleID, id++, 100);
-    man->FillNtupleDColumn(tupleID, id++, 100);
-    man->FillNtupleDColumn(tupleID, id++, 100);
+    man->FillNtupleDColumn(tupleID, id++, detector->GetDetectorHx());
+    man->FillNtupleDColumn(tupleID, id++, detector->GetDetectorHy());
+    man->FillNtupleDColumn(tupleID, id++, detector->GetDetectorHz());
     man->FillNtupleDColumn(tupleID, id++, detector->GetPressure());
     man->AddNtupleRow(tupleID);
 }

@@ -85,8 +85,8 @@ void SteppingAction::UserSteppingAction(const G4Step *step)
     
     if (curVolumeName.contains("Detector_phys"))
     {
-        // To calculate flux coming into the detector
-        if (isFirst && !prevVolName.contains("WirePlane") && prePtGeomBoundary) {
+        // To calculate flux coming into the detector, but not from parts inside detector
+        if (isFirst && !prevVolName.contains("WirePlane") && !prevVolName.contains("FieldCage") && prePtGeomBoundary) {
             G4int id = 0;
             G4int tupleId = 0;
             man->FillNtupleIColumn(tupleId, id++, eventID);
