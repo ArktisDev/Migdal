@@ -66,7 +66,6 @@ void RunAction::BeginOfRunAction(const G4Run*)
     man->CreateNtupleIColumn("Parent ID");
     man->CreateNtupleDColumn("Global Time (ns)");
     man->CreateNtupleSColumn("Particle Name");
-    man->CreateNtupleSColumn("Current Vol Name");
     man->CreateNtupleDColumn("Energy (keV)");
     man->CreateNtupleDColumn("Edep (keV)");
     man->CreateNtupleDColumn("End Position x (mm)");

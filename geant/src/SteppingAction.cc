@@ -143,7 +143,6 @@ void SteppingAction::UserSteppingAction(const G4Step *step)
             man->FillNtupleIColumn(tupleId, id++, parentID);
             man->FillNtupleDColumn(tupleId, id++, preTime / ns);
             man->FillNtupleSColumn(tupleId, id++, particleName);
-            man->FillNtupleSColumn(tupleId, id++, curVolumeName);
             man->FillNtupleDColumn(tupleId, id++, energy / keV);
             man->FillNtupleDColumn(tupleId, id++, edep / keV);
             man->FillNtupleDColumn(tupleId, id++, postPos.x() / mm);
