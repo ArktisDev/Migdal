@@ -10,11 +10,13 @@
 
 int main(int argc, char** argv)
 {
-    std::string inputFilename = "../../geant/data/default/output.root";
-    
-    if (argc == 2) {
-        inputFilename = std::string(argv[1]);
+    if (argc != 3) {
+        std::cout << "You need three arguments, see source code" << std::endl;
+        return 0;
     }
+    
+    std::string inputFilename = std::string(argv[1]);
+    int nParticles = std::stoi(argv[2]);
     
     std::string strippedInputFilename = inputFilename.substr(0, inputFilename.length() - 5);
     
@@ -24,24 +26,14 @@ int main(int argc, char** argv)
     Timer timer;
     
     timer.start();
-    std::string outFileName3DTTTP = strippedInputFilename + std::string("_3D_TTrack_TParticle.root");
-    CalculateCoincidences<true, true, true, true, true>(&inFile, outFileName3DTTTP);
-    std::cout << "3D_TTrack_TParticle took " << timer.elapsedMilli() << "ms" << std::endl;
+    std::string outFile = strippedInputFilename + std::string("_rr_coincidences.root");
+    CalculateRecoilCoincidences(&inFile, outFile, 1, 100000, nParticles);
+    std::cout << "1 took " << timer.elapsedMilli() << "ms to run" << std::endl;
     
     timer.start();
-    std::string outFileName2DTTTP = strippedInputFilename + std::string("_2D_xz_TTrack_TParticle.root");
-    CalculateCoincidences<true, true, true, false, true>(&inFile, outFileName2DTTTP);
-    std::cout << "2d_xz_TTrack_TParticle took " << timer.elapsedMilli() << "ms" << std::endl;
-    
-    timer.start();
-    std::string outFileName3DTTFP = strippedInputFilename + std::string("_3D_TTrack_FParticle.root");
-    CalculateCoincidences<false, true, true, true, true>(&inFile, outFileName3DTTFP);
-    std::cout << "3D_TTrack_FParticle took " << timer.elapsedMilli() << "ms" << std::endl;
-    
-    timer.start();
-    std::string outFileName2DTTFP = strippedInputFilename + std::string("_2D_xz_TTrack_FParticle.root");
-    CalculateCoincidences<false, true, true, false, true>(&inFile, outFileName2DTTFP);
-    std::cout << "2d_xz_TTrack_FParticle took " << timer.elapsedMilli() << "ms" << std::endl;
+    outFile = strippedInputFilename + std::string("_re_coincidences.root");
+    CalculateEdepRecoilCoincidences(&inFile, outFile, 1, 100000, nParticles);
+    std::cout << "2 took " << timer.elapsedMilli() << "ms to run" << std::endl;
     
     inFile.Close();
 }

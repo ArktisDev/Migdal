@@ -12,7 +12,7 @@ find_package(ROOT)
 #----------------------------------------------------------------------------
 # Set the appropriate compile options
 #
-add_compile_options(-Wall -Wno-shadow -Wno-unused-parameter -Wno-unused-variable -Wno-unused-but-set-variable)
+add_compile_options(-Wall -Wno-shadow -Wno-unused-parameter -Wno-unused-variable -Wno-unused-but-set-variable -Wno-sign-compare)
 
 #----------------------------------------------------------------------------
 # Locate sources and headers for this project

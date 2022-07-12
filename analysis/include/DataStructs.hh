@@ -281,6 +281,7 @@ struct EdepData {
     double time;
     char particleName[12];
     double energy;
+    double edep;
     double x;
     double y;
     double z;
@@ -295,6 +296,7 @@ struct EdepData {
     inline static double ftime = -1;
     inline static char fparticleName[12] = "";
     inline static double fenergy = -1;
+    inline static double fedep = -1;
     inline static double fx = -1;
     inline static double fy = -1;
     inline static double fz = -1;
@@ -306,6 +308,7 @@ struct EdepData {
         this->time = edepData.time;
         strcpy(this->particleName, edepData.particleName);
         this->energy = edepData.energy;
+        this->edep = edepData.edep;
         this->x = edepData.x;
         this->y = edepData.y;
         this->z = edepData.z;
@@ -324,6 +327,7 @@ struct EdepData {
         tree->SetBranchAddress("Global Time (ns)", &(EdepData::ftime));
         tree->SetBranchAddress("Particle Name", &(EdepData::fparticleName));
         tree->SetBranchAddress("Energy (keV)", &(EdepData::fenergy));
+        tree->SetBranchAddress("Edep (keV)", &(EdepData::fedep));
         tree->SetBranchAddress("End Position x (mm)", &(EdepData::fx));
         tree->SetBranchAddress("End Position y (mm)", &(EdepData::fy));
         tree->SetBranchAddress("End Position z (mm)", &(EdepData::fz));
@@ -338,6 +342,7 @@ struct EdepData {
         this->time = ftime;
         strcpy(this->particleName, fparticleName);
         this->energy = fenergy;
+        this->edep = fedep;
         this->x = fx;
         this->y = fy;
         this->z = fz;
@@ -352,6 +357,7 @@ std::ostream& operator<<(std::ostream& os, const EdepData& edepData) {
     os << "Time (ns): " << edepData.time << "\n";
     os << "Particle Name: " << edepData.particleName << "\n";
     os << "Energy (keV): " << edepData.energy << "\n";
+    os << "Edep (keV): " << edepData.edep << "\n";
     os << "x (mm): " << edepData.x << "\n";
     os << "y (mm): " << edepData.y << "\n";
     os << "z (mm): " << edepData.z;
