@@ -47,9 +47,9 @@ int main(int argc, char** argv)
             
             TTree* tree = new TTree(side.c_str(), "Title");
     
-            tree->Branch("coord1", &coord1, "coord1/D");
-            tree->Branch("coord2", &coord2, "coord2/D");
-            tree->Branch("energy", &energy, "energy/D");
+            tree->Branch("Coord1 (mm)", &coord1, "Coord1 (mm)/D");
+            tree->Branch("Coord2 (mm)", &coord2, "Coord2 (mm)/D");
+            tree->Branch("Energy (keV)", &energy, "Energy (keV)/D");
             
             // enter all rows of data into tree
             for (const std::vector<float>& row : pair.second) {
@@ -94,9 +94,9 @@ int main(int argc, char** argv)
             
             TTree* tree = new TTree(side.c_str(), "Title");
     
-            tree->Branch("coord1", &coord1, "coord1/D");
-            tree->Branch("coord2", &coord2, "coord2/D");
-            tree->Branch("energy", &energy, "energy/D");
+            tree->Branch("Coord1 (mm)", &coord1, "Coord1 (mm)/D");
+            tree->Branch("Coord2 (mm)", &coord2, "Coord2 (mm)/D");
+            tree->Branch("Energy (keV)", &energy, "Energy (keV)/D");
             
             // enter all rows of data into tree
             for (const std::vector<float>& row : pair.second) {

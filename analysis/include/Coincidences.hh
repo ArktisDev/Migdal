@@ -4,6 +4,7 @@
 #include "TROOT.h"
 
 #include "DataStructs.hh"
+#include "ProgressBar.hh"
 
 #include <string>
 #include <iostream>
@@ -48,6 +49,12 @@ void CalculateRecoilCoincidences(TFile* inFile, const std::string& outFileName,
     
     TFile outFile = TFile(outFileName.c_str(), "RECREATE");
     
+    // This uses a lot of RAM, but it means random access is fast
+    // Without this ROOT will read from disk for every data it accesses - Lars
+    // In a file with 600k entries I am seeing a factor of 1000x speedup with
+    // accessing data from RAM
+    data.tree->LoadBaskets();
+    
     int iter = 0;
     double dist = -1;
     char particle1[12] = "NULL";
@@ -75,7 +82,12 @@ void CalculateRecoilCoincidences(TFile* inFile, const std::string& outFileName,
         recoilRows[data.eventID].emplace_back(i);
     }
     
+    ProgressBar progressBar(iterations);
+    
     for (; iter < iterations; iter++) {
+        progressBar.UpdateProgress(iter);
+        progressBar.ShowBar();
+        
         std::vector<int> events = SampleWithoutReplacement(samplesPerIteration, nEvents);
         
         for (int i = 0; i < events.size(); i++) {
@@ -91,7 +103,9 @@ void CalculateRecoilCoincidences(TFile* inFile, const std::string& outFileName,
                 for (int k = 0; k < recoilRows[event1].size(); k++) {
                     for (int l = 0; l < recoilRows[event2].size(); l++) {
                         inFile->cd();
-                
+                        
+                        Timer timer;
+                        timer.start();
                         data.ReadEntry(recoilRows[event1][k]);
                         data2.ReadEntry(recoilRows[event2][l]);
                         
@@ -123,6 +137,10 @@ void CalculateRecoilCoincidences(TFile* inFile, const std::string& outFileName,
         }
     }
     
+    progressBar.UpdateProgress(iter);
+    progressBar.ShowBar();
+    progressBar.CompleteBar();
+    
     outFile.cd();
     outTree->Write();
     outTree->Delete();
@@ -138,6 +156,13 @@ void CalculateEdepRecoilCoincidences(TFile* inFile, const std::string& outFileNa
     EdepData edepdata;
     
     TFile outFile = TFile(outFileName.c_str(), "RECREATE");
+    
+    // This uses a lot of RAM, but it means random access is fast
+    // Without this ROOT will read from disk for every data it accesses - Lars
+    // In a file with 600k entries I am seeing a factor of 1000x speedup with
+    // accessing data from RAM
+    recoildata.tree->LoadBaskets();
+    edepdata.tree->LoadBaskets();
     
     int iter = 0;
     double dist = -1;
@@ -178,7 +203,11 @@ void CalculateEdepRecoilCoincidences(TFile* inFile, const std::string& outFileNa
         edepRows[edepdata.eventID].emplace_back(i);
     }
     
+    ProgressBar progressBar(iterations);
+    
     for (; iter < iterations; iter++) {
+        progressBar.UpdateProgress(iter);
+        progressBar.ShowBar();
         std::vector<int> events = SampleWithoutReplacement(samplesPerIteration, nEvents);
         
         for (int i = 0; i < events.size(); i++) {
@@ -225,6 +254,10 @@ void CalculateEdepRecoilCoincidences(TFile* inFile, const std::string& outFileNa
             }
         }
     }
+    
+    progressBar.UpdateProgress(iter);
+    progressBar.ShowBar();
+    progressBar.CompleteBar();
     
     outFile.cd();
     outTree->Write();
