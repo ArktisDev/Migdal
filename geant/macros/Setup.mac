@@ -3,7 +3,7 @@
 /process/em/pixe true
 
 # Run these commands before initializing the world to avoid messing up the material table with duplicate material names
-/exp/setPressure 20000
+/exp/setPressure 75
 /exp/setSourceShieldInitialOffset 1
 
 # Args are: thickness in cm, material, hole radius in cm
@@ -31,5 +31,7 @@
 /run/initialize
 
 /run/setCut 1 mm
-/run/setCutForRegion DetectorRegion 0.01 mm
+# e- below 2 keV aren't really produced by Migdal effect and aren't well detectable also
+# TODO: some way to convert energy cuts to production cuts
+/run/setCutForRegion DetectorRegion 0.05 mm
 /run/setCutForRegion ShieldRegion 2 mm
