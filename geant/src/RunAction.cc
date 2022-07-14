@@ -3,12 +3,13 @@
 #include <iostream>
 
 #include "G4RootAnalysisManager.hh"
+#include "G4Run.hh"
 
 #include "RunMessenger.hh"
 #include "DetectorConstruction.hh"
 
 RunAction::RunAction(DetectorConstruction* detector)
-: runMessenger( new RunMessenger(this) ), detector( detector ), filename( "output.root" )
+: runMessenger( new RunMessenger(this) ), detector( detector ), progressBar( ProgressBar(1) ), filename( "output.root" )
 {
     
 }
@@ -18,8 +19,11 @@ RunAction::~RunAction()
     
 }
 
-void RunAction::BeginOfRunAction(const G4Run*)
+void RunAction::BeginOfRunAction(const G4Run* run)
 {
+    this->progressBar = ProgressBar(run->GetNumberOfEventToBeProcessed());
+    this->progressBar.ShowBar();
+    
     G4RootAnalysisManager* man = G4RootAnalysisManager::Instance();
     man->OpenFile(filename);
     man->Clear();
@@ -58,6 +62,7 @@ void RunAction::BeginOfRunAction(const G4Run*)
     man->CreateNtupleDColumn("Position x (mm)");
     man->CreateNtupleDColumn("Position y (mm)");
     man->CreateNtupleDColumn("Position z (mm)");
+    man->CreateNtupleSColumn("Process");
     man->FinishNtuple(2);
     
     man->CreateNtuple("Edep", "data");
@@ -96,9 +101,17 @@ void RunAction::EndOfRunAction(const G4Run*)
     
     man->Write();
     man->CloseFile();
+    
+    this->progressBar.ShowBar();
+    this->progressBar.CompleteBar();
 }
 
 void RunAction::SetOutputFilename(const G4String& filename) 
 {
     this->filename = filename;
+}
+
+void RunAction::SetProgress(int progress) {
+    this->progressBar.UpdateProgress(progress);
+    this->progressBar.ShowBar();
 }

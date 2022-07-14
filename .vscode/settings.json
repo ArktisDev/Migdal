@@ -137,6 +137,7 @@
         "c1d": "cpp",
         "c2d": "cpp",
         "style_parser": "cpp",
-        "DetectorSurfaceFlux.C": "cpp"
+        "DetectorSurfaceFlux.C": "cpp",
+        "aida_ntuple": "cpp"
     }
 }

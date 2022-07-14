@@ -103,7 +103,6 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
 	detectorRegion = new G4Region("DetectorRegion");
 	shieldingRegion = new G4Region("ShieldRegion");
 	
-	// TODO : APPLY CUTS
 	G4double 			world_hx 		= 5 * m;
 	G4double 			world_hy 		= 5 * m;
 	G4double 			world_hz 		= 5 * m;

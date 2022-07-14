@@ -3,6 +3,7 @@
 
 #include "G4UserRunAction.hh"
 #include "G4String.hh"
+#include "ProgressBar.hh"
 
 class RunMessenger;
 class DetectorConstruction;
@@ -18,9 +19,13 @@ class RunAction : public G4UserRunAction
 	
 	void SetOutputFilename(const G4String& filename);
 	
+	void SetProgress(int progress);
+	
   private:
 	RunMessenger* runMessenger;
 	DetectorConstruction* detector;
+	
+	ProgressBar progressBar;
 	
 	G4String filename;
 };

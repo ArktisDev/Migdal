@@ -78,6 +78,15 @@ void SteppingAction::UserSteppingAction(const G4Step *step)
     G4double preTime = prePt->GetGlobalTime();
     G4double postTime = postPt->GetGlobalTime();
     
+    const G4VProcess* creationProcess = step->GetTrack()->GetCreatorProcess();
+    G4String creationProcessName = "NULL";
+    if (creationProcess) creationProcessName = creationProcess->GetProcessName();
+    
+    const G4VProcess* stepProcess = prePt->GetProcessDefinedStep();
+    G4String stepProcessName = "NULL";
+    if (stepProcess) stepProcessName = stepProcess->GetProcessName();
+    
+    
     G4String prevVolName = "NULL";
     if (prevVolume) prevVolName = prevVolume->GetName();
     
@@ -117,9 +126,9 @@ void SteppingAction::UserSteppingAction(const G4Step *step)
             man->AddNtupleRow(tupleId);
         }
         
-        // All recoils inside detector
+        // All recoils inside detector, not transportations into detector
         // Electron (11), positron (-11), nuclear (> 1E5) recoils, but not tracks
-        if (isFirst && energy > 0 && (particlePDG == 11 || particlePDG == -11 || particlePDG > 1E5)) {
+        if (isFirst && stepProcessName != "Transportation" && energy > 2 * keV && (particlePDG == 11 || particlePDG == -11 || particlePDG > 1E5)) {
             G4int id = 0;
             G4int tupleId = 2;
             man->FillNtupleIColumn(tupleId, id++, eventID);
@@ -131,11 +140,12 @@ void SteppingAction::UserSteppingAction(const G4Step *step)
             man->FillNtupleDColumn(tupleId, id++, prePos.x() / mm);
             man->FillNtupleDColumn(tupleId, id++, prePos.y() / mm);
             man->FillNtupleDColumn(tupleId, id++, prePos.z() / mm);
+            man->FillNtupleSColumn(tupleId, id++, creationProcessName);
             man->AddNtupleRow(tupleId);
         }
         
-        // All energy deposits (tracks) inside the detector
-        if (edep > 0) {
+        // All energy deposits (tracks) inside the detector that are above limit
+        if (edep > 2 * keV) {
             G4int id = 0;
             G4int tupleId = 3;
             man->FillNtupleIColumn(tupleId, id++, eventID);

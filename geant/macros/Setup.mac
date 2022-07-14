@@ -31,7 +31,5 @@
 /run/initialize
 
 /run/setCut 1 mm
-# e- below 2 keV aren't really produced by Migdal effect and aren't well detectable also
-# TODO: some way to convert energy cuts to production cuts
-/run/setCutForRegion DetectorRegion 0.05 mm
+/run/setCutForRegion DetectorRegion 0.01 mm
 /run/setCutForRegion ShieldRegion 2 mm

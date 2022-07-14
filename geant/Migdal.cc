@@ -4,6 +4,8 @@
 #include "G4UImanager.hh"
 #include "G4PhysListFactory.hh"
 #include "G4SystemOfUnits.hh"
+#include "G4ProductionCutsTable.hh"
+#include "G4EmParameters.hh"
 
 #include "Randomize.hh"
 
@@ -13,6 +15,7 @@
 #include "PrimaryGeneratorAction.hh"
 #include "RunAction.hh"
 #include "SteppingAction.hh"
+#include "EventAction.hh"
 
 int main(int argc, char** argv) 
 {
@@ -34,7 +37,7 @@ int main(int argc, char** argv)
     
     // Initialize physics list
     G4PhysListFactory physListFactory;
-    G4VModularPhysicsList* plist = physListFactory.GetReferencePhysList("QGSP_BIC_HP_EMZ"); 
+    G4VModularPhysicsList* plist = physListFactory.GetReferencePhysList("QGSP_BIC_HP_EMZ");
     runManager->SetUserInitialization(plist);
     
     // Initialize primary generator action
@@ -44,6 +47,10 @@ int main(int argc, char** argv)
     // Initialize run action
     RunAction* runAction = new RunAction(detector);
     runManager->SetUserAction(runAction);
+    
+    // Initialize event action
+    EventAction* eventAction = new EventAction(runAction);
+    runManager->SetUserAction(eventAction);
     
     // Initialize stepping action
     SteppingAction* steppingAction = new SteppingAction;
