@@ -138,6 +138,7 @@
         "c2d": "cpp",
         "style_parser": "cpp",
         "DetectorSurfaceFlux.C": "cpp",
-        "aida_ntuple": "cpp"
+        "aida_ntuple": "cpp",
+        "EnergyDiscriminate.C": "cpp"
     }
 }

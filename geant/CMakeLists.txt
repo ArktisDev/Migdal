@@ -24,7 +24,7 @@ include(${Geant4_USE_FILE})
 #----------------------------------------------------------------------------
 # Set the appropriate compile options
 #
-add_compile_options(-Wall -Wno-shadow -Wno-unused-parameter -Wno-unused-variable -Wno-deprecated-declarations)
+add_compile_options(-O3 -Wall -Wno-shadow -Wno-unused-parameter -Wno-unused-variable -Wno-deprecated-declarations)
 
 #----------------------------------------------------------------------------
 # Locate sources and headers for this project
