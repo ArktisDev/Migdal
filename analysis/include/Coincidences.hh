@@ -83,6 +83,7 @@ void CalculateRecoilCoincidences(TFile* inFile, const std::string& outFileName,
     }
     
     ProgressBar progressBar(iterations);
+    std::cout << "Will do " << iterations << " iterations" << std::endl;
     
     for (; iter < iterations; iter++) {
         progressBar.UpdateProgress(iter);
@@ -149,6 +150,7 @@ void CalculateRecoilCoincidences(TFile* inFile, const std::string& outFileName,
     outFile.Close();
 }
 
+template<bool forceAppropriateRecoil, bool distXAxis, bool distYAxis, bool distZAxis>
 void CalculateEdepRecoilCoincidences(TFile* inFile, const std::string& outFileName, 
     int iterations, int samplesPerIteration, int nEvents, double minEnergy = 2) 
 {
@@ -204,6 +206,7 @@ void CalculateEdepRecoilCoincidences(TFile* inFile, const std::string& outFileNa
     }
     
     ProgressBar progressBar(iterations);
+    std::cout << "Will do " << iterations << " iterations" << std::endl;
     
     for (; iter < iterations; iter++) {
         progressBar.UpdateProgress(iter);
@@ -229,6 +232,11 @@ void CalculateEdepRecoilCoincidences(TFile* inFile, const std::string& outFileNa
                         
                         // Discard events with same particle types
                         if (strcmp(recoildata.particleName, edepdata.particleName) == 0) continue;
+
+                        if constexpr (forceAppropriateRecoil) {
+                            // strstr returns nullptr if not found
+                            if (strstr(recoildata.particleName, "e")) continue;
+                        }
                         
                         // Discard events with below threshold energy
                         if (recoildata.energy < minEnergy) continue;
@@ -241,9 +249,9 @@ void CalculateEdepRecoilCoincidences(TFile* inFile, const std::string& outFileNa
                         
                         // Recalculate distance for this event
                         dist = 0;
-                        dist += std::pow(recoildata.x - edepdata.x, 2);
-                        dist += std::pow(recoildata.y - edepdata.y, 2);
-                        dist += std::pow(recoildata.z - edepdata.z, 2);
+                        if constexpr (distXAxis) dist += std::pow(recoildata.x - edepdata.x, 2);
+                        if constexpr (distYAxis)dist += std::pow(recoildata.y - edepdata.y, 2);
+                        if constexpr (distZAxis)dist += std::pow(recoildata.z - edepdata.z, 2);
                         dist = std::sqrt(dist);
                         
                         // Write to file the distance

@@ -34,16 +34,23 @@ int main(int argc, char** argv)
     SetupDataStructs(&inFile);
     
     Timer timer;
+
+    std::string outFile;
+    
+    // timer.start();
+    // std::string outFile = strippedInputFilename + std::string("_rr_coincidences.root");
+    // CalculateRecoilCoincidences(&inFile, outFile, iterations, samplesPerIteration, nParticles);
+    // std::cout << "1 took " << timer.elapsedMilli() << "ms to run" << std::endl;
     
     timer.start();
-    std::string outFile = strippedInputFilename + std::string("_rr_coincidences.root");
-    CalculateRecoilCoincidences(&inFile, outFile, iterations, samplesPerIteration, nParticles);
-    std::cout << "1 took " << timer.elapsedMilli() << "ms to run" << std::endl;
-    
+    outFile = strippedInputFilename + std::string("_re_coincidences_2D.root");
+    CalculateEdepRecoilCoincidences<true, true, false, true>(&inFile, outFile, iterations, samplesPerIteration, nParticles);
+    std::cout << "Recoil-Edep 2D coincidences took " << timer.elapsedMilli() << "ms to run" << std::endl;
+
     timer.start();
-    outFile = strippedInputFilename + std::string("_re_coincidences.root");
-    CalculateEdepRecoilCoincidences(&inFile, outFile, iterations, samplesPerIteration, nParticles);
-    std::cout << "2 took " << timer.elapsedMilli() << "ms to run" << std::endl;
+    outFile = strippedInputFilename + std::string("_re_coincidences_3D.root");
+    CalculateEdepRecoilCoincidences<true, true, true, true>(&inFile, outFile, iterations, samplesPerIteration, nParticles);
+    std::cout << "Recoil-Edep 3D coincidences took " << timer.elapsedMilli() << "ms to run" << std::endl;
     
     inFile.Close();
 }
