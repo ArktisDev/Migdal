@@ -111,7 +111,7 @@ void SteppingAction::UserSteppingAction(const G4Step *step)
         }
         
         // To calculate flux coming out of the detector
-        if (isLast && !postPt->GetPhysicalVolume()->GetName().contains("WirePlane") && postPtGeomBoundary) {
+        if (isLast && !postPt->GetPhysicalVolume()->GetName().contains("WirePlane") && !postPt->GetPhysicalVolume()->GetName().contains("FieldCage") && postPtGeomBoundary) {
             G4int id = 0;
             G4int tupleId = 1;
             man->FillNtupleIColumn(tupleId, id++, eventID);
