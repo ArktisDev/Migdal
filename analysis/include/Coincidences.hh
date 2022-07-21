@@ -141,8 +141,14 @@ void CalculateRecoilCoincidences(TFile* inFile, const std::string& outFileName,
     progressBar.UpdateProgress(iter);
     progressBar.ShowBar();
     progressBar.CompleteBar();
-    
+
     outFile.cd();
+    TTree* metaTree = new TTree("Metadata", "Title");
+    metaTree->Branch("Iterations", &iterations, "Iterations/I");
+    metaTree->Branch("Particles Per Pulse", &samplesPerIteration, "Particles Per Pulse/I");
+    metaTree->Fill();
+    metaTree->Write();
+
     outTree->Write();
     outTree->Delete();
     
@@ -266,8 +272,14 @@ void CalculateEdepRecoilCoincidences(TFile* inFile, const std::string& outFileNa
     progressBar.UpdateProgress(iter);
     progressBar.ShowBar();
     progressBar.CompleteBar();
-    
+
     outFile.cd();
+    TTree* metaTree = new TTree("Metadata", "Title");
+    metaTree->Branch("Iterations", &iterations, "Iterations/I");
+    metaTree->Branch("Particles Per Pulse", &samplesPerIteration, "Particles Per Pulse/I");
+    metaTree->Fill();
+    metaTree->Write();
+    
     outTree->Write();
     outTree->Delete();
     
