@@ -2,28 +2,29 @@
 /process/em/auger true
 /process/em/pixe true
 
-# Run these commands before initializing the world to avoid messing up the material table with duplicate material names
+# Run all experiment commands before initializing the world to avoid messing up the material table with duplicate material names
 /exp/setPressure 75
+
 /exp/setSourceShieldInitialOffset 1
 
 # Args are: thickness in cm, material, hole radius in cm
 
 /exp/setSourceShieldInitialOffset 1
 /exp/addSourceShieldLayer 0.5 Pb 0 50 0
-/exp/addSourceShieldLayer 10.16 BPoly 2.5 50 0
-/exp/addSourceShieldLayer 2.54 Pb 2.5 50 0
+/exp/addSourceShieldLayer 15.24 BPoly 2.5 50 0
+/exp/addSourceShieldLayer 10.16 Pb 2.5 50 0
 
-#/exp/setDetectorSideShieldInitialXOffset 0
-#/exp/setDetectorSideShieldInitialYOffset 0
-#/exp/addDetectorSideShieldLayer 0.5 Pb 0
-#/exp/addDetectorSideShieldLayer 5.08 BPoly 0
-#/exp/addDetectorSideShieldLayer 5.08 Pb 0
-#/exp/setDetectorSideShieldFWidthDeltaZ 5
-#/exp/setDetectorSideShieldBWidthDeltaZ 15
+/exp/setDetectorSideShieldInitialXOffset 0
+/exp/setDetectorSideShieldInitialYOffset 0
+/exp/addDetectorSideShieldLayer 0.5 Pb 0
+/exp/addDetectorSideShieldLayer 5.08 BPoly 0
+/exp/addDetectorSideShieldLayer 5.08 Pb 0
+/exp/setDetectorSideShieldFWidthDeltaZ 5
+/exp/setDetectorSideShieldBWidthDeltaZ 15
 
-#/exp/setDetectorBackShieldInitialOffset -14
-#/exp/addDetectorBackShieldLayer 0.5 Pb 0 0
-#/exp/addDetectorBackShieldLayer 5.08 BPoly 4 0
+/exp/setDetectorBackShieldInitialOffset -14
+/exp/addDetectorBackShieldLayer 0.5 Pb 0 0
+/exp/addDetectorBackShieldLayer 5.08 BPoly 4 0
 
 /file/setFileName ../data/default/output.root
 /file/setMaterialLogFilename ../data/default/materials.log

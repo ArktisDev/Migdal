@@ -139,6 +139,7 @@
         "style_parser": "cpp",
         "DetectorSurfaceFlux.C": "cpp",
         "aida_ntuple": "cpp",
-        "EnergyDiscriminate.C": "cpp"
+        "EnergyDiscriminate.C": "cpp",
+        "FilterFieldCage.C": "cpp"
     }
 }

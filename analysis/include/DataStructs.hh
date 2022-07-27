@@ -373,6 +373,12 @@ struct MetaData {
     double detector_hy;
     double detector_hz;
     double pressure;
+    double cageXmin;
+    double cageXmax;
+    double cageYmin;
+    double cageYmax;
+    double cageZmin;
+    double cageZmax;
     
     inline static TTree* tree = nullptr;
     
@@ -381,12 +387,24 @@ struct MetaData {
     inline static double fdetector_hy = -1;
     inline static double fdetector_hz = -1;
     inline static double fpressure = -1;
+    inline static double fcageXmin = -1;
+    inline static double fcageXmax = -1;
+    inline static double fcageYmin = -1;
+    inline static double fcageYmax = -1;
+    inline static double fcageZmin = -1;
+    inline static double fcageZmax = -1;
     
     MetaData(const MetaData& metaData) {
         this->detector_hx = metaData.detector_hx;
         this->detector_hy = metaData.detector_hy;
         this->detector_hz = metaData.detector_hz;
         this->pressure = metaData.pressure;
+        this->cageXmin = metaData.cageXmin;
+        this->cageXmax = metaData.cageXmax;
+        this->cageYmin = metaData.cageYmin;
+        this->cageYmax = metaData.cageYmax;
+        this->cageZmin = metaData.cageZmin;
+        this->cageZmax = metaData.cageZmax;
     }
     
     MetaData() {
@@ -399,6 +417,12 @@ struct MetaData {
         tree->SetBranchAddress("Detector_hy (mm)", &(MetaData::fdetector_hy));
         tree->SetBranchAddress("Detector_hz (mm)", &(MetaData::fdetector_hz));
         tree->SetBranchAddress("Pressure (torr)", &(MetaData::fpressure));
+        tree->SetBranchAddress("Field Cage x min (mm)", &(MetaData::fcageXmin));
+        tree->SetBranchAddress("Field Cage x max (mm)", &(MetaData::fcageXmax));
+        tree->SetBranchAddress("Field Cage y min (mm)", &(MetaData::fcageYmin));
+        tree->SetBranchAddress("Field Cage y max (mm)", &(MetaData::fcageYmax));
+        tree->SetBranchAddress("Field Cage z min (mm)", &(MetaData::fcageZmin));
+        tree->SetBranchAddress("Field Cage z max (mm)", &(MetaData::fcageZmax));
     }
     
     void ReadEntry(Long64_t entry) {
@@ -408,6 +432,12 @@ struct MetaData {
         this->detector_hy = fdetector_hy;
         this->detector_hz = fdetector_hz;
         this->pressure = fpressure;
+        this->cageXmin = fcageXmin;
+        this->cageXmax = fcageXmax;
+        this->cageYmin = fcageYmin;
+        this->cageYmax = fcageYmax;
+        this->cageZmin = fcageZmin;
+        this->cageZmax = fcageZmax;
     }
 };
 

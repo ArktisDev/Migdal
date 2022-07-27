@@ -83,6 +83,12 @@ void RunAction::BeginOfRunAction(const G4Run* run)
     man->CreateNtupleDColumn("Detector_hy (mm)");
     man->CreateNtupleDColumn("Detector_hz (mm)");
     man->CreateNtupleDColumn("Pressure (torr)");
+    man->CreateNtupleDColumn("Field Cage x min (mm)");
+    man->CreateNtupleDColumn("Field Cage y min (mm)");
+    man->CreateNtupleDColumn("Field Cage z min (mm)");
+    man->CreateNtupleDColumn("Field Cage x max (mm)");
+    man->CreateNtupleDColumn("Field Cage y max (mm)");
+    man->CreateNtupleDColumn("Field Cage z max (mm)");
     man->FinishNtuple(4);
     
     G4int id = 0;
@@ -92,6 +98,12 @@ void RunAction::BeginOfRunAction(const G4Run* run)
     man->FillNtupleDColumn(tupleID, id++, detector->GetDetectorHy());
     man->FillNtupleDColumn(tupleID, id++, detector->GetDetectorHz());
     man->FillNtupleDColumn(tupleID, id++, detector->GetPressure());
+    man->FillNtupleDColumn(tupleID, id++, detector->GetDetectorFieldCageCorner(1).x());
+    man->FillNtupleDColumn(tupleID, id++, detector->GetDetectorFieldCageCorner(1).y());
+    man->FillNtupleDColumn(tupleID, id++, detector->GetDetectorFieldCageCorner(1).z());
+    man->FillNtupleDColumn(tupleID, id++, detector->GetDetectorFieldCageCorner(2).x());
+    man->FillNtupleDColumn(tupleID, id++, detector->GetDetectorFieldCageCorner(2).y());
+    man->FillNtupleDColumn(tupleID, id++, detector->GetDetectorFieldCageCorner(2).z());
     man->AddNtupleRow(tupleID);
 }
 

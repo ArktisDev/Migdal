@@ -115,9 +115,13 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
 	G4VPhysicalVolume*	World_physical 	= new G4PVPlacement(0, G4ThreeVector(), World_logical, "World_phys", 0, false, 0, checkOverlaps);
 	World_logical->SetVisAttributes(world_visAttr);
 	
-	G4double 			detector_hx 		= this->detector_hx;
-	G4double 			detector_hy 		= this->detector_hy;
-	G4double 			detector_hz 		= this->detector_hz;
+	// Detector has interior volume of (9 in)^3, walls are 1 inch thick
+	G4double 			detector_hx 		= 4.5 * inch;
+	G4double 			detector_hy 		= 4.5 * inch;
+	G4double 			detector_hz 		= 4.5 * inch;
+	this->detector_hx 						= detector_hx;
+	this->detector_hy 						= detector_hy;
+	this->detector_hz 						= detector_hz;
 	G4Material* 		detector_mat 		= CF4;
 	G4VisAttributes*    detector_visAttr  	= new G4VisAttributes(G4Color::Cyan());
 
@@ -126,22 +130,22 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
 	G4VPhysicalVolume*  Detector_physical 	= new G4PVPlacement(0, G4ThreeVector(0, 0, 0 * cm), Detector_logical, "Detector_phys", World_logical, false, 0, checkOverlaps);
 	Detector_logical->SetVisAttributes(detector_visAttr);
 	
-	G4double 			wireplane_hx 		= 8 * cm;
+	G4double 			wireplane_hx 		= 5.5 * cm;
 	G4double 			wireplane_hy 		= 0.5 * cm;
-	G4double 			wireplane_hz 		= 8 * cm;
+	G4double 			wireplane_hz 		= 5.5 * cm;
 	G4Material* 		wireplane_mat 		= copper;
 	G4VisAttributes*    wireplane_visAttr  	= new G4VisAttributes(copperColor);
-	G4ThreeVector       wireplane_pos       = G4ThreeVector(0, -0.35 * detector_hy, 0);
+	G4ThreeVector       wireplane_pos       = G4ThreeVector(0, -0.4 * detector_hy, 0);
 	
 	G4Box*	            WirePlane_solid 	= new G4Box("WirePlane_sol", wireplane_hx, wireplane_hy, wireplane_hz);
 	G4LogicalVolume*	WirePlane_logical	= new G4LogicalVolume(WirePlane_solid, wireplane_mat, "WirePlane_log");
 	G4VPhysicalVolume*  Wireplane_physical	= new G4PVPlacement(0, wireplane_pos, WirePlane_logical, "WirePlane_phys", Detector_logical, false, 0, checkOverlaps);
     WirePlane_logical->SetVisAttributes(wireplane_visAttr);
 	
-	G4double 			fieldCage_squareRadius	= 5 * cm;
-	G4double			fieldCage_torusRadius	= 0.1 * cm;
+	G4double 			fieldCage_squareRadius	= 5.5 * cm;
+	G4double			fieldCage_torusRadius	= 0.08 * cm; // 16 AWG
 	G4double 			fieldCage_spacing		= 1 * cm;
-	G4int				fieldCage_levels		= 8;
+	G4int				fieldCage_levels		= 9;
 	G4double			fieldCage_initialY		= wireplane_pos.y() + 1 * cm;
 	G4Material* 		fieldCage_mat 			= copper;
 	G4VisAttributes*    fieldCage_visAttr  		= new G4VisAttributes(copperColor);
@@ -157,7 +161,23 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
 		
 		G4VPhysicalVolume*  fieldCage_physical = new G4PVPlacement(0, fieldCage_pos, fieldCage_logical, "FieldCage_phys", Detector_logical, true, i, checkOverlaps);
 	}
-	
+
+	this->fieldCageCorner1 = G4ThreeVector(-wireplane_hx, wireplane_pos.y() + wireplane_hy, -wireplane_hz);
+	this->fieldCageCorner2 = G4ThreeVector(wireplane_hx, fieldCage_initialY + (fieldCage_levels - 1) * fieldCage_spacing, wireplane_hz);
+
+	G4double 			fieldCage_holder_hx		= 0.5 * cm;
+	G4double 			fieldCage_holder_hy		= ((fieldCage_levels - 0.75) * fieldCage_spacing + fieldCage_initialY - wireplane_pos.y()) / 2;
+	G4double			fieldCage_holder_hz		= 1.5 * cm;
+	G4Material*			fieldCageHolder_mat		= G4Material::GetMaterial("G4_POLYETHYLENE");
+	G4VisAttributes*    fieldCageHolder_visAttr = new G4VisAttributes(G4Color(0.4, 0.4, 0.4));
+
+	G4Box*				fieldCageHolder_solid 	= new G4Box("FieldCageHolder_sol1", fieldCage_holder_hx, fieldCage_holder_hy, fieldCage_holder_hz);
+	G4LogicalVolume*	fieldCageHolder_logical	= new G4LogicalVolume(fieldCageHolder_solid, fieldCageHolder_mat, "FieldCageHolder_log");
+	G4VPhysicalVolume*  fieldcageHolder_phys1	= new G4PVPlacement(0, G4ThreeVector(fieldCage_squareRadius + fieldCage_holder_hx + fieldCage_torusRadius, wireplane_pos.y() + fieldCage_holder_hy, 0), fieldCageHolder_logical, "FieldCageHolder_phys", Detector_logical, true, 0, checkOverlaps);
+	G4VPhysicalVolume*  fieldcageHolder_phys2	= new G4PVPlacement(0, G4ThreeVector(-(fieldCage_squareRadius + fieldCage_holder_hx + fieldCage_torusRadius), wireplane_pos.y() + fieldCage_holder_hy, 0), fieldCageHolder_logical, "FieldCageHolder_phys", Detector_logical, true, 1, checkOverlaps);
+	fieldCageHolder_logical->SetVisAttributes(fieldCageHolder_visAttr);
+
+
 	G4double			detectorCase_thickX 	= 1 * inch;
 	G4double			detectorCase_thickY 	= 1 * inch;
 	G4double			detectorCase_thickZ 	= 1 * inch;
@@ -166,7 +186,7 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
 	
 	G4double            window_Radius			= windowRadius;
 	G4double			window_Thickness			= 1 * mm;
-	G4Material* 		window_mat 				= mylar;
+	G4Material* 		window_mat 				= aluminum;
 	G4VisAttributes*    window_visAttr 			= new G4VisAttributes(G4Color(0.1,0.2,0.5));
 	
 	G4Box*	            DetectorCase0_solid    	= new G4Box("DetectorCase0_sol", detector_hx + detectorCase_thickX, detector_hy + detectorCase_thickY, detector_hz + detectorCase_thickZ); //box

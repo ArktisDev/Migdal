@@ -3,6 +3,7 @@
 
 #include "G4VUserDetectorConstruction.hh"
 #include "G4Region.hh"
+#include "G4ThreeVector.hh"
 #include "G4SystemOfUnits.hh"
 
 #include <string>
@@ -46,6 +47,8 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 	G4double GetDetectorHx() {return this->detector_hx;}
 	G4double GetDetectorHy() {return this->detector_hy;}
 	G4double GetDetectorHz() {return this->detector_hz;}
+
+	G4ThreeVector GetDetectorFieldCageCorner(int i) {if (i == 1) return this->fieldCageCorner1; else return this->fieldCageCorner2; }
 	
   private:
 	DetectorMessenger*  detectorMessenger;
@@ -55,9 +58,12 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 	G4double 	  	    pressure;
 	G4double			windowRadius;
 	
-	G4double 			detector_hx 		= 5 * inch;
-	G4double 			detector_hy 		= 5 * inch;
-	G4double 			detector_hz 		= 5 * inch;
+	G4double 			detector_hx;
+	G4double 			detector_hy;
+	G4double 			detector_hz;
+
+	G4ThreeVector		fieldCageCorner1;
+	G4ThreeVector		fieldCageCorner2;
 	
 	std::vector<std::vector<std::string>> 	sourceShieldStructure;
 	G4double								sourceShieldInitialOffset;
