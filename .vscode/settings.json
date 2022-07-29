@@ -140,6 +140,7 @@
         "DetectorSurfaceFlux.C": "cpp",
         "aida_ntuple": "cpp",
         "EnergyDiscriminate.C": "cpp",
-        "FilterFieldCage.C": "cpp"
+        "FilterFieldCage.C": "cpp",
+        "StripFluxData.C": "cpp"
     }
 }

@@ -449,26 +449,36 @@ std::ostream& operator<<(std::ostream& os, const MetaData& metaData) {
     return os;
 }
 
-void SetupDataStructs(TFile* tfile) {
-    TTree* enteringTree;
-    enteringTree = (TTree*) tfile->Get("Entering");
-    EnteringData::SetupTree(enteringTree);
+void SetupDataStructs(TFile* tfile, bool entering = true, bool leaving = true, bool recoils = true, bool edep = true, bool meta = true) {
+    if (entering) {
+        TTree* enteringTree;
+        enteringTree = (TTree*) tfile->Get("Entering");
+        EnteringData::SetupTree(enteringTree);
+    }
 
-    TTree* leavingTree;
-    leavingTree = (TTree*) tfile->Get("Leaving");
-    LeavingData::SetupTree(leavingTree);
+    if (leaving) {
+        TTree* leavingTree;
+        leavingTree = (TTree*) tfile->Get("Leaving");
+        LeavingData::SetupTree(leavingTree);
+    }
 
-    TTree* recoilsTree;
-    recoilsTree = (TTree*) tfile->Get("Recoils");
-    RecoilsData::SetupTree(recoilsTree);
+    if (recoils) {
+        TTree* recoilsTree;
+        recoilsTree = (TTree*) tfile->Get("Recoils");
+        RecoilsData::SetupTree(recoilsTree);
+    }
 
-    TTree* edepTree;
-    edepTree = (TTree*) tfile->Get("Edep");
-    EdepData::SetupTree(edepTree);
+    if (edep) {
+        TTree* edepTree;
+        edepTree = (TTree*) tfile->Get("Edep");
+        EdepData::SetupTree(edepTree);
+    }
 
-    TTree* metaTree;
-    metaTree = (TTree*) tfile->Get("Meta");
-    MetaData::SetupTree(metaTree);
+    if (meta) {
+        TTree* metaTree;
+        metaTree = (TTree*) tfile->Get("Meta");
+        MetaData::SetupTree(metaTree);
+    }
 }
 
 #endif // DATASTRUCTS_H

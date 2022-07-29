@@ -43,6 +43,7 @@ int main(int argc, char** argv)
     
     TTree* newEnteringTree = enteringData.tree->CloneTree(0);
 
+    std::cout << "Copying entering tree" << std::endl;
     newEnteringTree->CopyEntries(enteringData.tree);
 
     outFile.cd();
@@ -50,6 +51,7 @@ int main(int argc, char** argv)
 
     TTree* newLeavingTree = leavingData.tree->CloneTree(0);
 
+    std::cout << "Copying leaving tree" << std::endl;
     newLeavingTree->CopyEntries(leavingData.tree);
     
     outFile.cd();
@@ -57,10 +59,11 @@ int main(int argc, char** argv)
 
     TTree* newRecoilTree = recoilData.tree->CloneTree(0);
 
-    for (int i = 0; i < edepData.entries; i++) {
-        edepData.ReadEntry(i);
+    std::cout << "Filtering recoil tree" << std::endl;
+    for (int i = 0; i < recoilData.entries; i++) {
+        recoilData.ReadEntry(i);
 
-        if (InsideFieldCage(edepData.x, edepData.y, edepData.z, cageXmin, cageXmax, cageYmin, cageYmax, cageZmin, cageZmax)) {
+        if (InsideFieldCage(recoilData.x, recoilData.y, recoilData.z, cageXmin, cageXmax, cageYmin, cageYmax, cageZmin, cageZmax)) {
             newRecoilTree->Fill();
         }
     }
@@ -70,6 +73,7 @@ int main(int argc, char** argv)
 
     TTree* newEdepTree = edepData.tree->CloneTree(0);
 
+    std::cout << "Filtering edep tree" << std::endl;
     for (int i = 0; i < edepData.entries; i++) {
         edepData.ReadEntry(i);
 
@@ -77,6 +81,14 @@ int main(int argc, char** argv)
             newEdepTree->Fill();
         }
     }
+
+    outFile.cd();
+    outFile.Write();
+
+    TTree* newMetaTree = metaData.tree->CloneTree(0);
+
+    std::cout << "Copying metadata tree" << std::endl;
+    newMetaTree->CopyEntries(metaData.tree);
 
     outFile.cd();
     outFile.Write();
