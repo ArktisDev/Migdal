@@ -51,6 +51,7 @@ void DetectorConstruction::DefineMaterials()
   	G4int ncomp, natoms;
 	G4double density;
 
+	// The below formula does look correct - Lars
 	density = pressure * 88 / 62.364 / 293 * g / (1000 * cm3);  // pM/RT in g/L
 	G4Material* CF4 = new G4Material ("CF4", density, ncomp=2);
 	CF4->AddElement(nist->FindOrBuildElement("C"), natoms=1);
